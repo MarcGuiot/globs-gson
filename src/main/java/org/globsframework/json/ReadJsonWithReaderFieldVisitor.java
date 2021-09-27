@@ -80,7 +80,7 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
             JsonToken peek = jsonReader.peek();
             switch (peek) {
                 case STRING:
-                    mutableGlob.set(field, jsonReader.nextString().intern());
+                    mutableGlob.set(field, jsonReader.nextString());
                     break;
                 case NUMBER:
                     mutableGlob.set(field, Double.toString(jsonReader.nextDouble()));
@@ -101,8 +101,7 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
                 values = Arrays.copyOf(values, values.length * 2);
             }
             if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
-                JsonParser jsonParser = new JsonParser();
-                JsonElement parse = jsonParser.parse(jsonReader);
+                JsonElement parse = JsonParser.parseReader(jsonReader);
                 if (parse.isJsonArray()) {
                     values[count++] = GlobGSonDeserializer.GSON.toJson(parse.getAsJsonArray());
                 } else if (parse.isJsonObject()) {

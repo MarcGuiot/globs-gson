@@ -47,20 +47,19 @@ public abstract class GSonVisitor implements FieldVisitorWithTwoContext<JsonElem
    }
 
    public void visitString(StringField stringField, JsonElement element, FieldSetter fieldSetter) {
-       if (stringField.hasAnnotation(IsJsonContentType.UNIQUE_KEY) || element.isJsonObject() || element.isJsonArray()) {
+       if (stringField.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
            if (element.isJsonObject()) {
                JsonObject jsonObject = element.getAsJsonObject();
-               if (jsonObject != null) {
-                   fieldSetter.set(stringField, GlobGSonDeserializer.GSON.toJson(jsonObject));
-               }
+               fieldSetter.set(stringField, GlobGSonDeserializer.GSON.toJson(jsonObject));
            } else if (element.isJsonArray()) {
                JsonArray jsonArray = element.getAsJsonArray();
-               if (jsonArray != null) {
-                   fieldSetter.set(stringField, GlobGSonDeserializer.GSON.toJson(jsonArray));
-               }
+               fieldSetter.set(stringField, GlobGSonDeserializer.GSON.toJson(jsonArray));
+           }
+           else {
+               fieldSetter.set(stringField, GlobGSonDeserializer.GSON.toJson(element.getAsJsonPrimitive()));
            }
        } else {
-           fieldSetter.set(stringField, element.getAsString().intern());
+           fieldSetter.set(stringField, element.getAsString());
        }
    }
 
@@ -69,7 +68,7 @@ public abstract class GSonVisitor implements FieldVisitorWithTwoContext<JsonElem
        String value[] = new String[asJsonArray.size()];
        int i = 0;
        for (JsonElement element : asJsonArray) {
-           if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY) || element.isJsonObject() || element.isJsonArray()) {
+           if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
                if (element.isJsonObject()) {
                    JsonObject jsonObject = element.getAsJsonObject();
                    if (jsonObject != null) {
@@ -82,7 +81,7 @@ public abstract class GSonVisitor implements FieldVisitorWithTwoContext<JsonElem
                    }
                }
            } else {
-               value[i] = element.getAsString().intern();
+               value[i] = element.getAsString();
            }
            ++i;
        }
