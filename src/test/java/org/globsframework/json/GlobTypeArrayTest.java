@@ -3,8 +3,8 @@ package org.globsframework.json;
 import com.google.gson.Gson;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.FieldNameAnnotationType;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class GlobTypeArrayTest {

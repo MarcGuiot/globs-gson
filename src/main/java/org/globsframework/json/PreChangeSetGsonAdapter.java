@@ -13,6 +13,7 @@ import org.globsframework.metamodel.fields.GlobArrayField;
 import org.globsframework.metamodel.fields.GlobArrayUnionField;
 import org.globsframework.metamodel.fields.GlobField;
 import org.globsframework.metamodel.fields.GlobUnionField;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.model.*;
 import org.globsframework.model.delta.DefaultFixStateChangeSet;
 import org.globsframework.model.delta.DeltaGlob;
@@ -45,7 +46,7 @@ public class PreChangeSetGsonAdapter extends TypeAdapter<PreChangeSet> {
             JsonObject jsonObject = elt.getAsJsonObject();
             String state = jsonObject.get("state").getAsString();
             String kind = jsonObject.get("_kind").getAsString();
-            GlobType globType = resolver.get(kind);
+            GlobType globType = resolver.getType(kind);
             JsonObject key = jsonObject.get("key").getAsJsonObject();
             Key readKey = readKey(key, globType, globType.getKeyFields(), jsonreader);
             switch (state) {

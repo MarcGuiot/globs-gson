@@ -4,6 +4,7 @@ import com.google.gson.*;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeBuilder;
 import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.model.Glob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ class GlobTypeGsonDeserializer {
             if (globType != null) {
                 return globType;
             }
-            return globTypeResolver.find(name);
+            return globTypeResolver.findType(name);
         };
         this.ignoreUnknownAnnotation = ignoreUnknownAnnotation;
     }
@@ -127,17 +128,17 @@ class GlobTypeGsonDeserializer {
                 globTypeBuilder.declareBlobField(attrName, globList);
                 break;
             case GlobsGson.GLOB_TYPE:
-                globTypeBuilder.declareGlobField(attrName, globTypeResolver.get(fieldContent.get(GlobsGson.GLOB_TYPE_KIND).getAsString()), globList);
+                globTypeBuilder.declareGlobField(attrName, globTypeResolver.getType(fieldContent.get(GlobsGson.GLOB_TYPE_KIND).getAsString()), globList);
                 break;
             case GlobsGson.GLOB_ARRAY_TYPE:
-                globTypeBuilder.declareGlobArrayField(attrName, globTypeResolver.get(fieldContent.get(GlobsGson.GLOB_TYPE_KIND).getAsString()), globList);
+                globTypeBuilder.declareGlobArrayField(attrName, globTypeResolver.getType(fieldContent.get(GlobsGson.GLOB_TYPE_KIND).getAsString()), globList);
                 break;
             case GlobsGson.GLOB_UNION_TYPE: {
                 JsonArray kind = fieldContent.get(GlobsGson.GLOB_UNION_KINDS).getAsJsonArray();
                 globTypeBuilder.declareGlobUnionField(attrName,
                         StreamSupport.stream(Spliterators.spliterator(kind.iterator(), kind.size(), 0), false)
                                 .map(JsonElement::getAsString)
-                                .map(globTypeResolver::get).collect(Collectors.toList()), globList);
+                                .map(globTypeResolver::getType).collect(Collectors.toList()), globList);
                 break;
             }
             case GlobsGson.GLOB_UNION_ARRAY_TYPE: {
@@ -145,7 +146,7 @@ class GlobTypeGsonDeserializer {
                 globTypeBuilder.declareGlobUnionArrayField(attrName,
                         StreamSupport.stream(Spliterators.spliterator(kind.iterator(), kind.size(), 0), false)
                                 .map(JsonElement::getAsString)
-                                .map(globTypeResolver::get).collect(Collectors.toList()), globList);
+                                .map(globTypeResolver::getType).collect(Collectors.toList()), globList);
                 break;
             }
             default:

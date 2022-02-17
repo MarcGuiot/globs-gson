@@ -3,9 +3,9 @@ package org.globsframework.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.model.ChangeSet;
 import org.globsframework.model.Glob;
-import org.globsframework.model.Key;
 
 public class GlobsGson {
 

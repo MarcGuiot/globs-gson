@@ -1,7 +1,7 @@
 package org.globsframework.json.helper;
 
 import com.google.gson.*;
-import org.globsframework.json.GlobTypeResolver;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.json.GlobsGson;
 import org.globsframework.metamodel.GlobType;
 import org.slf4j.Logger;
@@ -77,7 +77,7 @@ public class LoadingGlobTypeResolver implements GlobTypeResolver {
         }
     }
 
-    public GlobType find(String s) {
+    public GlobType findType(String s) {
         GlobType globType = created.get(s);
         if (globType != null) {
             return globType;
@@ -94,7 +94,7 @@ public class LoadingGlobTypeResolver implements GlobTypeResolver {
     public Collection<GlobType> load(Gson gson) {
         this.gson = gson;
         for (String s : typesToLoad.keySet()) {
-            created.put(s, get(s)); // force adding it because created do not contains local type (from GlobTypeResolver)
+            created.put(s, getType(s)); // force adding it because created do not contains local type (from GlobTypeResolver)
         }
         return created.values();
     }

@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.GlobTypeResolver;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -52,8 +53,8 @@ public class GlobTypeSetAdapter extends TypeAdapter<GlobTypeSet> {
             typesToRead.put(kind, jsonType);
         }
         Resolver resolver = new Resolver(globTypeResolver, typesToRead, ignoreUnknownAnnotation);
-        typesToRead.forEach((key, value) -> resolver.find(key));
-        return new GlobTypeSet(typesToRead.keySet().stream().map(resolver::find).toArray(GlobType[]::new));
+        typesToRead.forEach((key, value) -> resolver.findType(key));
+        return new GlobTypeSet(typesToRead.keySet().stream().map(resolver::findType).toArray(GlobType[]::new));
     }
 
     static class Resolver implements GlobTypeResolver {
@@ -68,8 +69,8 @@ public class GlobTypeSetAdapter extends TypeAdapter<GlobTypeSet> {
             globTypeGsonDeserializer = new GlobTypeGsonDeserializer(new GlobGSonDeserializer(), this, ignoreUnknownAnnotation);
         }
 
-        public GlobType find(String name) {
-            GlobType globType1 = globTypeResolver.find(name);
+        public GlobType findType(String name) {
+            GlobType globType1 = globTypeResolver.findType(name);
             if (globType1 != null) {
                 return globType1;
             }

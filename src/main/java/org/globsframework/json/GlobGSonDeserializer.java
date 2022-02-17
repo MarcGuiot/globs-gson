@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonToken;
 import org.globsframework.json.annottations.UnknownAnnotation;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,7 @@ public class GlobGSonDeserializer {
                 MutableGlob mutableGlob = readGlob(jsonObject, UnknownAnnotation.TYPE);
                 return deserialize(JsonParser.parseReader(new StringReader(mutableGlob.get(UnknownAnnotation.CONTENT))), globTypeResolver, ignoreUnknownAnnotation);
             }
-            GlobType globType = ignoreUnknownAnnotation ? globTypeResolver.find(type) : globTypeResolver.get(type);
+            GlobType globType = ignoreUnknownAnnotation ? globTypeResolver.findType(type) : globTypeResolver.getType(type);
             if (globType == null) {
                 LOGGER.debug("Unknown annotation " + type);
                 return UnknownAnnotation.TYPE.instantiate()
@@ -100,7 +101,7 @@ public class GlobGSonDeserializer {
             String name = in.nextName();
             if (name.equalsIgnoreCase(GlobsGson.KIND_NAME)) {
                 String kind = in.nextString();
-                Glob glob = readFields(in, resolver.get(kind));
+                Glob glob = readFields(in, resolver.getType(kind));
                 in.endObject();
                 return glob;
             } else {
@@ -119,7 +120,7 @@ public class GlobGSonDeserializer {
             String name = in.nextName();
             if (name.equalsIgnoreCase(GlobsGson.KIND_NAME)) {
                 String kind = in.nextString();
-                GlobType type = resolver.get(kind);
+                GlobType type = resolver.getType(kind);
                 KeyBuilder keyBuilder = KeyBuilder.init(type);
                 read(in, type, keyBuilder);
                 in.endObject();
@@ -142,7 +143,7 @@ public class GlobGSonDeserializer {
         if (kindElement == null) {
             throw new RuntimeException("kind not found in " + values);
         }
-        GlobType type = resolver.get(kindElement.getAsString());
+        GlobType type = resolver.getType(kindElement.getAsString());
         MutableGlob instantiate = type.instantiate();
         for (Map.Entry<String, JsonElement> stringJsonElementEntry : values.entrySet()) {
             Field field = type.findField(stringJsonElementEntry.getKey());
@@ -164,7 +165,7 @@ public class GlobGSonDeserializer {
         if (kindElement == null) {
             throw new RuntimeException("kind not found in " + values);
         }
-        GlobType type = resolver.get(kindElement.getAsString());
+        GlobType type = resolver.getType(kindElement.getAsString());
         KeyBuilder instantiate = KeyBuilder.init(type);
         for (Map.Entry<String, JsonElement> stringJsonElementEntry : values.entrySet()) {
             Field field = type.findField(stringJsonElementEntry.getKey());

@@ -9,6 +9,7 @@ import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.FieldNameAnnotationType;
 import org.globsframework.metamodel.fields.*;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.model.Glob;
 
 import java.io.IOException;

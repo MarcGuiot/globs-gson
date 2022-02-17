@@ -1,6 +1,6 @@
 package org.globsframework.json.annottations;
 
-import org.globsframework.json.GlobTypeResolver;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.json.JsonDateTimeFormatType;
 import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.impl.DefaultGlobModel;
