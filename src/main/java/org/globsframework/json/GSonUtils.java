@@ -45,6 +45,22 @@ public class GSonUtils {
         return glob;
     }
 
+    public static Glob decode(String json, GlobTypeResolver resolver) {
+        try {
+            return GlobGSonDeserializer.read(new JsonReader(new NoLockStringReader(json)), resolver);
+        } catch (IOException e) {
+            throw new RuntimeException("Fail to read", e);
+        }
+    }
+
+    public static Glob decode(Reader reader, GlobTypeResolver resolver) {
+        try {
+            return GlobGSonDeserializer.read(new JsonReader(reader), resolver);
+        } catch (IOException e) {
+            throw new RuntimeException("Fail to read", e);
+        }
+    }
+
     public static Glob[] decodeArray(String str, GlobType globType) {
         return decodeArray(new NoLockStringReader(str), globType);
     }
