@@ -74,7 +74,7 @@ public class PerfReadWriteTest {
             gson.toJson(collect, new GSonUtils.StringWriterToBuilder(writer));
         }
         long end = System.nanoTime();
-        System.out.println("write " + (end - start) / 1000000. + "ms" + " s=" + writer.substring(0, 10));  // 1100ms puis 600ms
+        System.out.println("write " + (end - start) / 1000000. + "ms size : " + writer.length() + " s=" + writer.substring(0, 10));  // 1100ms puis 600ms
         return writer.toString();
     }
 
