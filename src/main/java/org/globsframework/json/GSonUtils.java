@@ -87,6 +87,7 @@ public class GSonUtils {
                 count++;
                 in.endObject();
             }
+            in.endArray();
         } catch (IOException e) {
             throw new RuntimeException("Fail to convert to Glob", e);
         }
