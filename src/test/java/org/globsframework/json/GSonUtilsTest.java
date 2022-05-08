@@ -4,6 +4,7 @@ import org.globsframework.json.annottations.AllAnnotations;
 import org.globsframework.json.annottations.JsonDateTimeFormatAnnotation;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.metamodel.annotations.KeyAnnotationType;
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.Required;
