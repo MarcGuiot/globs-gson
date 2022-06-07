@@ -94,6 +94,13 @@ public class GSonUtils {
         return count;
     }
 
+    public static String encodeHidSensitiveData(Glob glob) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Writer out = new StringWriterToBuilder(stringBuilder);
+        encode(out, glob, true, false,  true);
+        return stringBuilder.toString();
+    }
+
     public static String encode(Glob glob, boolean withKind) {
         StringBuilder stringBuilder = new StringBuilder();
         Writer out = new StringWriterToBuilder(stringBuilder);
@@ -111,7 +118,7 @@ public class GSonUtils {
     public static String niceEncode(Glob glob, boolean withKind) {
         StringBuilder stringBuilder = new StringBuilder();
         Writer out = new StringWriterToBuilder(stringBuilder);
-        encode(out, glob, withKind, true);
+        encode(out, glob, withKind, true, false);
         return stringBuilder.toString();
     }
 
@@ -131,7 +138,7 @@ public class GSonUtils {
     }
 
     public static void encode(Writer out, Glob glob, boolean withKind) {
-        encode(out, glob, withKind, false);
+        encode(out, glob, withKind, false, false);
     }
 
     public static void encode(StringBuilder out, Glob glob, boolean withKind) {
@@ -140,10 +147,10 @@ public class GSonUtils {
 
     // pour éviter le sync de StringBuffer lorsqu'on utilise un StringWriter
     public static void encode(StringBuilder stringBuilder, Glob glob, boolean withKind, boolean nice) {
-        encode(new StringWriterToBuilder(stringBuilder), glob, withKind, nice);
+        encode(new StringWriterToBuilder(stringBuilder), glob, withKind, nice, false);
     }
 
-    public static void encode(Writer out, Glob glob, boolean withKind, boolean nice) {
+    public static void encode(Writer out, Glob glob, boolean withKind, boolean nice, boolean hidSensitiveData) {
         try {
             JsonWriter jsonWriter = new JsonWriter(out);
             if (nice) {
@@ -153,7 +160,13 @@ public class GSonUtils {
             if (withKind) {
                 jsonWriter.name(GlobsGson.KIND_NAME).value(glob.getType().getName());
             }
-            JsonFieldValueVisitor jsonFieldValueVisitor = new JsonFieldValueVisitor(jsonWriter);
+            JsonFieldValueVisitor jsonFieldValueVisitor;
+            if (hidSensitiveData) {
+                jsonFieldValueVisitor = new JsonFieldValueVisitorHideSensitiveData(jsonWriter);
+            }
+            else {
+                jsonFieldValueVisitor = new JsonFieldValueVisitor(jsonWriter);
+            }
             glob.safeAccept(jsonFieldValueVisitor);
             jsonWriter.endObject();
         } catch (IOException e) {

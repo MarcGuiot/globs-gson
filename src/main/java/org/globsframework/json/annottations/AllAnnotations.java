@@ -7,7 +7,8 @@ import org.globsframework.metamodel.impl.DefaultGlobModel;
 
 public class AllAnnotations {
     public final static GlobModel MODEL =
-            new DefaultGlobModel(IsJsonContentType.TYPE, JsonDateTimeFormatType.TYPE, JsonDateFormatType.TYPE, UnknownAnnotation.TYPE);
+            new DefaultGlobModel(IsJsonContentType.TYPE, JsonDateTimeFormatType.TYPE, JsonDateFormatType.TYPE, UnknownAnnotation.TYPE,
+                    JsonHidValue.TYPE, JsonValueAsFieldType.TYPE, JsonAsObjectType.TYPE);
 
     public final static GlobTypeResolver RESOLVER = GlobTypeResolver.chain(org.globsframework.metamodel.annotations.AllAnnotations.MODEL::findType,
             MODEL::findType);
