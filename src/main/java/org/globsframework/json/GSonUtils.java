@@ -150,7 +150,7 @@ public class GSonUtils {
         encode(new StringWriterToBuilder(stringBuilder), glob, withKind, nice, false);
     }
 
-    public static void encode(Writer out, Glob glob, boolean withKind, boolean nice, boolean hidSensitiveData) {
+    public static void encode(Writer out, Glob glob, boolean withKind, boolean nice, boolean hideSensitiveData) {
         try {
             JsonWriter jsonWriter = new JsonWriter(out);
             if (nice) {
@@ -161,10 +161,9 @@ public class GSonUtils {
                 jsonWriter.name(GlobsGson.KIND_NAME).value(glob.getType().getName());
             }
             JsonFieldValueVisitor jsonFieldValueVisitor;
-            if (hidSensitiveData) {
+            if (hideSensitiveData) {
                 jsonFieldValueVisitor = new JsonFieldValueVisitorHideSensitiveData(jsonWriter);
-            }
-            else {
+            } else {
                 jsonFieldValueVisitor = new JsonFieldValueVisitor(jsonWriter);
             }
             glob.safeAccept(jsonFieldValueVisitor);
@@ -226,12 +225,27 @@ public class GSonUtils {
         return dateConverter;
     }
 
+    public static String encodeHidSensitiveData(Glob[] glob) {
+        return encode(glob, true, true);
+    }
+
     public static String encode(Glob[] glob, boolean withKind) {
+        return encode(glob, withKind, false);
+    }
+
+    private static String encode(Glob[] glob, boolean withKind, boolean hideSensitiveData) {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             StringWriterToBuilder out = new StringWriterToBuilder(stringBuilder);
             JsonWriter jsonWriter = new JsonWriter(out);
-            JsonFieldValueVisitor jsonFieldValueVisitor = new JsonFieldValueVisitor(jsonWriter);
+
+            JsonFieldValueVisitor jsonFieldValueVisitor;
+            if (hideSensitiveData) {
+                jsonFieldValueVisitor = new JsonFieldValueVisitorHideSensitiveData(jsonWriter);
+            } else {
+                jsonFieldValueVisitor = new JsonFieldValueVisitor(jsonWriter);
+            }
+
             jsonWriter.beginArray();
             for (Glob v : glob) {
                 jsonWriter.beginObject();
