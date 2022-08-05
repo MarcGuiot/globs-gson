@@ -7,9 +7,9 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import org.globsframework.json.annottations.JsonDateFormatType;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.metamodel.fields.DateField;
 import org.globsframework.metamodel.fields.DateTimeField;
-import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
@@ -97,7 +97,7 @@ public class GSonUtils {
     public static String encodeHidSensitiveData(Glob glob) {
         StringBuilder stringBuilder = new StringBuilder();
         Writer out = new StringWriterToBuilder(stringBuilder);
-        encode(out, glob, true, false,  true);
+        encode(out, glob, true, false, true);
         return stringBuilder.toString();
     }
 

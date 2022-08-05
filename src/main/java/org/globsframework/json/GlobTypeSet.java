@@ -18,7 +18,7 @@ public class GlobTypeSet {
     }
 
     public static GlobTypeSet export(GlobType globType) {
-        Set<GlobType> types = new HashSet<>();
+        Set<GlobType> types = new LinkedHashSet<>();
         add(globType, types);
         GlobType[] globTypes = new GlobType[types.size()];
         types.remove(globType);
