@@ -94,6 +94,29 @@ public class GSonUtils {
         return count;
     }
 
+    public static Glob[] decodeArray(Reader reader, GlobTypeResolver resolver) {
+        List<Glob> globs = new ArrayList<>();
+        decodeArray(reader, resolver, globs::add);
+        return globs.toArray(new Glob[0]);
+    }
+
+    public static long decodeArray(Reader reader, GlobTypeResolver resolver, Consumer<Glob> consumer) {
+        long count = 0;
+        try {
+            JsonReader in = new JsonReader(reader);
+            in.beginArray();
+            while (in.peek() != JsonToken.END_ARRAY) {
+                Glob e = GlobGSonDeserializer.read(in, resolver);
+                consumer.accept(e);
+                count++;
+            }
+            in.endArray();
+        } catch (IOException e) {
+            throw new RuntimeException("Fail to convert to Glob", e);
+        }
+        return count;
+    }
+
     public static String encodeHidSensitiveData(Glob glob) {
         StringBuilder stringBuilder = new StringBuilder();
         Writer out = new StringWriterToBuilder(stringBuilder);
