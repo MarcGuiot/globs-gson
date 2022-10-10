@@ -14,6 +14,8 @@ public class JsonDateTimeFormatType {
 
     public static StringField FORMAT;
 
+    public static BooleanField strictIso8601;
+
     public static BooleanField AS_LOCAL;
 
     public static StringField NULL_VALUE;
@@ -27,6 +29,7 @@ public class JsonDateTimeFormatType {
                       .set(FORMAT, ((JsonDateTimeFormatAnnotation) annotation).pattern())
                       .set(AS_LOCAL, ((JsonDateTimeFormatAnnotation) annotation).asLocal())
                       .set(NULL_VALUE, ((JsonDateTimeFormatAnnotation) annotation).nullValue())
+                      .set(strictIso8601, ((JsonDateTimeFormatAnnotation) annotation).strictIso8601())
               )
               .load();
     }

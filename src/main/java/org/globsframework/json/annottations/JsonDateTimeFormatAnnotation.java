@@ -11,11 +11,13 @@ import java.lang.annotation.RetentionPolicy;
 @java.lang.annotation.Target({ElementType.FIELD})
 public @interface JsonDateTimeFormatAnnotation {
 
-    String pattern();
+    String pattern() default "";
+
+    boolean strictIso8601() default false;
 
     boolean asLocal() default false;
 
     String nullValue() default "";
 
-    public GlobType TYPE = JsonDateTimeFormatType.TYPE;
+    GlobType TYPE = JsonDateTimeFormatType.TYPE;
 }

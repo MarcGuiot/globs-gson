@@ -235,6 +235,9 @@ public class GSonUtils {
         DateTimeFormatter dateConverter;
         if (field.hasAnnotation(JsonDateTimeFormatType.UNIQUE_KEY)) {
             Glob annotation = field.getAnnotation(JsonDateTimeFormatType.UNIQUE_KEY);
+            if (annotation.isTrue(JsonDateTimeFormatType.strictIso8601)) {
+                return DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+            }
             String pattern = annotation.get(JsonDateTimeFormatType.FORMAT);
             DateTimeFormatter dateTimeFormatter = CACHE_DATE_TIME.get(pattern);
             if (dateTimeFormatter == null) {
