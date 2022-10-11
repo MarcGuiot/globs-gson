@@ -18,7 +18,14 @@ import java.util.Map;
 import java.util.UUID;
 
 public class GlobGSonDeserializer {
-    public static final Gson GSON = new Gson();
+    public static final Gson GSON;
+
+    static {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.serializeNulls();
+        GSON = gsonBuilder.create();
+    }
+
     public static final GSonVisitor G_SON_VISITOR = new GSonVisitor() {
         Glob readGlob(JsonObject jsonObject, GlobType globType) {
             return GlobGSonDeserializer.readGlob(jsonObject, globType);
