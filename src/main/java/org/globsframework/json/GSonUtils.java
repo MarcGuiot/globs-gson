@@ -10,6 +10,7 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.metamodel.fields.DateField;
 import org.globsframework.metamodel.fields.DateTimeField;
+import org.globsframework.model.FieldSetter;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
@@ -43,6 +44,17 @@ public class GSonUtils {
             throw new RuntimeException("Fail to convert to Glob", e);
         }
         return glob;
+    }
+
+    public static void decode(Reader reader, GlobType globType, FieldSetter fieldSetter) {
+        try {
+            JsonReader in = new JsonReader(reader);
+            in.beginObject();
+            GlobGSonDeserializer.read(in, globType, fieldSetter);
+            in.endObject();
+        } catch (IOException e) {
+            throw new RuntimeException("Fail to convert to Glob", e);
+        }
     }
 
     public static Glob decode(String json, GlobTypeResolver resolver) {
