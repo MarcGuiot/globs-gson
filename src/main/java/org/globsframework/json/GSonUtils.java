@@ -5,12 +5,14 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import org.globsframework.functional.FunctionalKey;
 import org.globsframework.json.annottations.JsonDateFormatType;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.metamodel.fields.DateField;
 import org.globsframework.metamodel.fields.DateTimeField;
 import org.globsframework.model.FieldSetter;
+import org.globsframework.model.FieldValues;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
@@ -143,6 +145,13 @@ public class GSonUtils {
         return stringBuilder.toString();
     }
 
+    public static String encode(FunctionalKey functionalKey) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Writer out = new StringWriterToBuilder(stringBuilder);
+        encodeFieldValues(out, functionalKey);
+        return stringBuilder.toString();
+    }
+
     public static String encode(Key key, boolean withKind) {
         StringBuilder stringBuilder = new StringBuilder();
         Writer out = new StringWriterToBuilder(stringBuilder);
@@ -202,6 +211,19 @@ public class GSonUtils {
                 jsonFieldValueVisitor = new JsonFieldValueVisitor(jsonWriter);
             }
             glob.safeAccept(jsonFieldValueVisitor);
+            jsonWriter.endObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void encodeFieldValues(Writer out, FieldValues fieldValues) {
+        try {
+            JsonWriter jsonWriter = new JsonWriter(out);
+            jsonWriter.beginObject();
+            JsonFieldValueVisitor jsonFieldValueVisitor;
+            jsonFieldValueVisitor = new JsonFieldValueVisitor(jsonWriter);
+            fieldValues.safeAccept(jsonFieldValueVisitor);
             jsonWriter.endObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
