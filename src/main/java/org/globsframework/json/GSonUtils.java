@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
@@ -179,6 +180,12 @@ public class GSonUtils {
         Gson gson = GlobsGson.createBuilder(resolver, ignore).create();
         GlobTypeSet globTypeSet = gson.fromJson(json, GlobTypeSet.class);
         return globTypeSet.globType[0];
+    }
+
+    public static Optional<GlobType> decodeOptGlobType(String json, GlobTypeResolver resolver, boolean ignore) {
+        Gson gson = GlobsGson.createBuilder(resolver, ignore).create();
+        GlobTypeSet globTypeSet = gson.fromJson(json, GlobTypeSet.class);
+        return globTypeSet.globType.length == 0 ? Optional.empty() : Optional.of(globTypeSet.globType[0]);
     }
 
     public static void encode(Writer out, Glob glob, boolean withKind) {
