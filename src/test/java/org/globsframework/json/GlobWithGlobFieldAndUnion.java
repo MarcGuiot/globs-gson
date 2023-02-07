@@ -13,6 +13,10 @@ import org.globsframework.model.MutableGlob;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.globsframework.json.GlobsGsonAdapterTest.assertEquivalent;
 
 public class GlobWithGlobFieldAndUnion {
@@ -112,6 +116,7 @@ public class GlobWithGlobFieldAndUnion {
                     .load();
         }
     }
+
 
     @Test
     public void write() throws Exception {

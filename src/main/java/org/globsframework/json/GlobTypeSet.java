@@ -34,10 +34,10 @@ public class GlobTypeSet {
         if (!types.add(globType)) {
             return;
         }
-        globType.streamAnnotations().map(Glob::getType).forEach(types::add);
+        globType.streamAnnotations().map(Glob::getType).forEach(t -> add(t, types));
         Field[] fields = globType.getFields();
         for (Field field : fields) {
-            field.streamAnnotations().map(Glob::getType).forEach(types::add);
+            field.streamAnnotations().map(Glob::getType).forEach(t -> add(t, types));
             if (field instanceof GlobArrayField) {
                 add(((GlobArrayField) field).getTargetType(), types);
             }

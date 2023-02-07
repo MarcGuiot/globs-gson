@@ -5,10 +5,9 @@ import org.globsframework.json.annottations.JsonDateTimeFormatAnnotation;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.metamodel.annotations.KeyAnnotationType;
-import org.globsframework.metamodel.annotations.KeyField;
-import org.globsframework.metamodel.annotations.Required;
+import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.DateTimeField;
+import org.globsframework.metamodel.fields.GlobField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.model.Glob;
@@ -17,8 +16,12 @@ import org.junit.Test;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public class GSonUtilsTest {
 
@@ -71,6 +74,7 @@ public class GSonUtilsTest {
         @KeyField
         public static IntegerField id;
 
+        @AnnotationLevel_1
         public static StringField name;
 
         @JsonDateTimeFormatAnnotation(pattern = "yyyy-MM-dd HH:mm:ss", asLocal = true, nullValue = "0000")
@@ -83,4 +87,37 @@ public class GSonUtilsTest {
         }
     }
 
+
+    @Retention(RUNTIME)
+    @java.lang.annotation.Target({ElementType.FIELD})
+    public @interface AnnotationLevel_1 {
+        GlobType TYPE = Annotation_1.TYPE;
+    }
+
+    public static class Annotation_1 {
+        public static GlobType TYPE;
+
+        public static StringField a;
+
+        @Target(Annotation_2.class)
+        public static GlobField sub;
+
+        static {
+            GlobTypeLoaderFactory.create(Annotation_1.class)
+                    .register(GlobCreateFromAnnotation.class, annotation -> TYPE.instantiate()
+                            .set(sub, Annotation_2.TYPE.instantiate().set(Annotation_2.b, "aa"))).load()
+            ;
+        }
+    }
+
+    public static class Annotation_2 {
+        public static GlobType TYPE;
+
+        public static StringField b;
+
+
+        static {
+            GlobTypeLoaderFactory.create(Annotation_2.class).load();
+        }
+    }
 }

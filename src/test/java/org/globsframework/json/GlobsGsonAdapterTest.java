@@ -6,10 +6,7 @@ import com.google.gson.JsonParser;
 import org.globsframework.json.annottations.IsJsonContentAnnotation;
 import org.globsframework.json.annottations.IsJsonContentType;
 import org.globsframework.metamodel.*;
-import org.globsframework.metamodel.annotations.AllAnnotations;
-import org.globsframework.metamodel.annotations.FieldNameAnnotation;
-import org.globsframework.metamodel.annotations.KeyField;
-import org.globsframework.metamodel.annotations.Required;
+import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.impl.DefaultGlobModel;
 import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
@@ -22,6 +19,8 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -29,6 +28,8 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public class GlobsGsonAdapterTest {
 
@@ -65,49 +66,51 @@ public class GlobsGsonAdapterTest {
         Gson gson = init();
         String json = gson.toJson(LocalType.TYPE);
 
-        assertEquivalent("{\n" +
-                "  \"kind\": \"test local type\",\n" +
-                "  \"fields\": [\n" +
-                "    {\n" +
-                "      \"name\": \"id\",\n" +
-                "      \"type\": \"int\",\n" +
-                "      \"annotations\": [\n" +
-                "        {\n" +
-                "          \"_kind\": \"KeyAnnotation\",\n" +
-                "          \"index\": 0\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"a different name\",\n" +
-                "      \"type\": \"string\",\n" +
-                "      \"annotations\": [\n" +
-                "        {\n" +
-                "          \"_kind\": \"KeyAnnotation\",\n" +
-                "          \"index\": 1\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"data\",\n" +
-                "      \"type\": \"string\",\n" +
-                "      \"annotations\": [\n" +
-                "        {\n" +
-                "          \"_kind\": \"isJsonContent\"\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"value\",\n" +
-                "      \"type\": \"double\"\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"annotations\": [\n" +
-                "    {\n" +
-                "      \"_kind\": \"requiredAnnotationType\"\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}", json);
+        assertEquivalent("""
+                {
+                  "kind": "test local type",
+                  "fields": [
+                    {
+                      "name": "id",
+                      "type": "int",
+                      "annotations": [
+                        {
+                          "_kind": "KeyAnnotation",
+                          "index": 0
+                        }
+                      ]
+                    },
+                    {
+                      "name": "a different name",
+                      "type": "string",
+                      "annotations": [
+                        {
+                          "_kind": "KeyAnnotation",
+                          "index": 1
+                        }
+                      ]
+                    },
+                    {
+                      "name": "data",
+                      "type": "string",
+                      "annotations": [
+                        {
+                          "_kind": "isJsonContent"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "value",
+                      "type": "double"
+                    }
+                  ],
+                  "annotations": [
+                    {
+                      "_kind": "requiredAnnotationType"
+                    }
+                  ]
+                }
+                """, json);
     }
 
     private Gson init(GlobType... types) {
