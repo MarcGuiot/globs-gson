@@ -301,10 +301,15 @@ public class GSonUtils {
     }
 
     private static String encode(Glob[] glob, boolean withKind, boolean hideSensitiveData) {
+        StringBuilder stringBuilder = new StringBuilder();
+        StringWriterToBuilder out = new StringWriterToBuilder(stringBuilder);
+        encode(out, glob, withKind, hideSensitiveData);
+        return stringBuilder.toString();
+    }
+
+    private static void encode(Writer writer, Glob[] glob, boolean withKind, boolean hideSensitiveData) {
         try {
-            StringBuilder stringBuilder = new StringBuilder();
-            StringWriterToBuilder out = new StringWriterToBuilder(stringBuilder);
-            JsonWriter jsonWriter = new JsonWriter(out);
+            JsonWriter jsonWriter = new JsonWriter(writer);
 
             JsonFieldValueVisitor jsonFieldValueVisitor;
             if (hideSensitiveData) {
@@ -323,7 +328,6 @@ public class GSonUtils {
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
-            return stringBuilder.toString();
         } catch (IOException e) {
             throw new RuntimeException("In encode", e);
         }
@@ -434,7 +438,7 @@ public class GSonUtils {
 
         public int read(char cbuf[], int off, int len) throws IOException {
             if ((off < 0) || (off > cbuf.length) || (len < 0) ||
-                    ((off + len) > cbuf.length) || ((off + len) < 0)) {
+                ((off + len) > cbuf.length) || ((off + len) < 0)) {
                 throw new IndexOutOfBoundsException();
             } else if (len == 0) {
                 return 0;
