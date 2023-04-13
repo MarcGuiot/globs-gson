@@ -307,7 +307,15 @@ public class GSonUtils {
         return stringBuilder.toString();
     }
 
-    private static void encode(Writer writer, Glob[] glob, boolean withKind, boolean hideSensitiveData) {
+    public static void encode(Writer writer, Glob[] glob) {
+        encode(writer, glob, false, false);
+    }
+
+    public static void encode(Writer writer, Glob[] glob, boolean withKind) {
+        encode(writer, glob, withKind, false);
+    }
+
+    public static void encode(Writer writer, Glob[] glob, boolean withKind, boolean hideSensitiveData) {
         try {
             JsonWriter jsonWriter = new JsonWriter(writer);
 
