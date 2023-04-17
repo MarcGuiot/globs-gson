@@ -139,6 +139,14 @@ public class GSonUtils {
         return stringBuilder.toString();
     }
 
+    public static String encodeWihKind(Glob glob) {
+        return encode(glob, true);
+    }
+
+    public static String encodeWithoutKind(Glob glob) {
+        return encode(glob, false);
+    }
+
     public static String encode(Glob glob, boolean withKind) {
         StringBuilder stringBuilder = new StringBuilder();
         Writer out = new StringWriterToBuilder(stringBuilder);
@@ -294,6 +302,14 @@ public class GSonUtils {
 
     public static String encodeHidSensitiveData(Glob[] glob) {
         return encode(glob, true, true);
+    }
+
+    public static String encodeWithKind(Glob[] glob) {
+        return encode(glob, true, false);
+    }
+
+    public static String encodeWithoutKind(Glob[] glob) {
+        return encode(glob, false, false);
     }
 
     public static String encode(Glob[] glob, boolean withKind) {
