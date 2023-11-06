@@ -80,10 +80,8 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
             JsonToken peek = jsonReader.peek();
             switch (peek) {
                 case STRING:
-                    mutableGlob.set(field, jsonReader.nextString());
-                    break;
                 case NUMBER:
-                    mutableGlob.set(field, Double.toString(jsonReader.nextDouble()));
+                    mutableGlob.set(field, jsonReader.nextString());
                     break;
                 case BOOLEAN:
                     mutableGlob.set(field, Boolean.toString(jsonReader.nextBoolean()));
