@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeBuilder;
 import org.globsframework.metamodel.annotations.AllAnnotations;
+import org.globsframework.metamodel.fields.DateTimeField;
 import org.globsframework.metamodel.fields.DoubleField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
@@ -17,6 +18,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,6 +38,7 @@ public class PerfReadWriteTest {
         StringField str_2 = globTypeBuilder.declareStringField("str_2");
         IntegerField anInt = globTypeBuilder.declareIntegerField("anInt");
         DoubleField aDouble = globTypeBuilder.declareDoubleField("aDouble");
+        DateTimeField aDate = globTypeBuilder.declareDateTimeField("aDate");
 
         GlobType globType = globTypeBuilder.get();
 
@@ -44,6 +48,7 @@ public class PerfReadWriteTest {
                                 .set(str_1, "str_1_" + i)
                                 .set(str_2, "str_2_" + i)
                                 .set(anInt, i)
+                                .set(aDate, ZonedDateTime.now().plus((long) (Math.random() * 10), ChronoUnit.HOURS))
                                 .set(aDouble, i))
                 .collect(Collectors.toList());
         DefaultGlobModel globTypes = new DefaultGlobModel(AllAnnotations.MODEL, globType);
