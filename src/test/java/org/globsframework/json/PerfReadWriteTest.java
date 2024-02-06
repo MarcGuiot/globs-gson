@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -38,17 +39,18 @@ public class PerfReadWriteTest {
         StringField str_2 = globTypeBuilder.declareStringField("str_2");
         IntegerField anInt = globTypeBuilder.declareIntegerField("anInt");
         DoubleField aDouble = globTypeBuilder.declareDoubleField("aDouble");
-        DateTimeField aDate = globTypeBuilder.declareDateTimeField("aDate");
+        DateTimeField aDate = globTypeBuilder.declareDateTimeField("aDate", JsonDateTimeFormatType.TYPE.instantiate()
+                .set(JsonDateTimeFormatType.useFastIso8601, true));
 
         GlobType globType = globTypeBuilder.get();
 
-        List<MutableGlob> collect = IntStream.range(0, 1000)
+        List<Glob> collect = IntStream.range(0, 1000)
                 .mapToObj(i ->
                         globType.instantiate()
                                 .set(str_1, "str_1_" + i)
                                 .set(str_2, "str_2_" + i)
                                 .set(anInt, i)
-                                .set(aDate, ZonedDateTime.now().plus((long) (Math.random() * 10), ChronoUnit.HOURS))
+                                .set(aDate, ZonedDateTime.now(Clock.systemUTC()).plusHours((long) (Math.random() * 10)))
                                 .set(aDouble, i))
                 .collect(Collectors.toList());
         DefaultGlobModel globTypes = new DefaultGlobModel(AllAnnotations.MODEL, globType);
@@ -71,7 +73,7 @@ public class PerfReadWriteTest {
         read(gson, s);
     }
 
-    private String write(List<MutableGlob> collect, Gson gson) {
+    private String write(List<Glob> collect, Gson gson) {
         long start = System.nanoTime();
         StringBuilder writer = new StringBuilder();
         for (int i = 0 ; i < 1000; i++) {

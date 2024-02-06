@@ -149,7 +149,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
     }
 
     public void visitDateTime(DateTimeField field, ZonedDateTime value) throws Exception {
-        DateTimeFormatter timeFormatter = GSonUtils.getCachedDateTimeFormatter(field);
+        GSonUtils.FormaterForDateTime timeFormatter = GSonUtils.getCachedDateTimeFormatter(field);
         jsonWriter.name(field.getName());
         if (value != null) {
             jsonWriter.value(timeFormatter.format(value));
