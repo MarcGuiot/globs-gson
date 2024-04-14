@@ -7,6 +7,8 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import org.globsframework.functional.FunctionalKey;
 import org.globsframework.json.annottations.JsonDateFormatType;
+import org.globsframework.json.helper.ISO8601Utils;
+import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.metamodel.fields.DateField;
@@ -15,10 +17,14 @@ import org.globsframework.model.FieldSetter;
 import org.globsframework.model.FieldValues;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
+import org.globsframework.utils.Strings;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +36,7 @@ import java.util.function.Consumer;
 public class GSonUtils {
 
     public static Map<String, DateTimeFormatter> CACHE_DATE = new ConcurrentHashMap<>();
-    public static Map<String, DateTimeFormatter> CACHE_DATE_TIME = new ConcurrentHashMap<>();
+    public static Map<Field, FormaterForDateTime> CACHE_DATE_TIME = new ConcurrentHashMap<>();
 
     public static Glob decode(String json, GlobType globType) {
         return decode(new NoLockStringReader(json), globType);
@@ -263,7 +269,7 @@ public class GSonUtils {
         }
     }
 
-    public static DateTimeFormatter getCachedDateFormatter(DateField field) {
+    public static DateTimeFormatter getCachedDateFormatter(DateField field)     {
         DateTimeFormatter dateConverter;
         if (field.hasAnnotation(JsonDateFormatType.UNIQUE_KEY)) {
             Glob annotation = field.getAnnotation(JsonDateFormatType.UNIQUE_KEY);
@@ -280,23 +286,120 @@ public class GSonUtils {
         return dateConverter;
     }
 
-    public static DateTimeFormatter getCachedDateTimeFormatter(DateTimeField field) {
-        DateTimeFormatter dateConverter;
-        if (field.hasAnnotation(JsonDateTimeFormatType.UNIQUE_KEY)) {
-            Glob annotation = field.getAnnotation(JsonDateTimeFormatType.UNIQUE_KEY);
-            if (annotation.isTrue(JsonDateTimeFormatType.strictIso8601)) {
-                return DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-            }
-            String pattern = annotation.get(JsonDateTimeFormatType.FORMAT);
-            DateTimeFormatter dateTimeFormatter = CACHE_DATE_TIME.get(pattern);
-            if (dateTimeFormatter == null) {
-                dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-                CACHE_DATE_TIME.put(pattern, dateTimeFormatter);
-            }
-            dateConverter = dateTimeFormatter;
-        } else {
-            dateConverter = DateTimeFormatter.ISO_DATE_TIME;
+    public interface FormaterForDateTime {
+        ZonedDateTime parse(String date);
+
+        String format(ZonedDateTime date);
+    }
+
+    static class DefaultFormater implements FormaterForDateTime {
+        private final DateTimeFormatter dateTimeFormatter;
+
+        public DefaultFormater(DateTimeFormatter dateTimeFormatter) {
+            this.dateTimeFormatter = dateTimeFormatter;
         }
+
+        @Override
+        public ZonedDateTime parse(String date) {
+            return ZonedDateTime.from(dateTimeFormatter.parse(date));
+        }
+
+        @Override
+        public String format(ZonedDateTime date) {
+            return dateTimeFormatter.format(date);
+        }
+    }
+
+    static class DefaultLocalFormater implements FormaterForDateTime {
+        private final DateTimeFormatter dateTimeFormatter;
+        private final ZoneId zone;
+
+        public DefaultLocalFormater(DateTimeFormatter dateTimeFormatter, ZoneId zone) {
+            this.dateTimeFormatter = dateTimeFormatter;
+            this.zone = zone;
+        }
+
+        @Override
+        public ZonedDateTime parse(String date) {
+            return ZonedDateTime.of(LocalDateTime.from(dateTimeFormatter.parse(date)), zone);
+        }
+
+        @Override
+        public String format(ZonedDateTime date) {
+            return dateTimeFormatter.format(date);
+        }
+    }
+
+    static class IsoWithZoneFormater implements FormaterForDateTime {
+        private final static FormaterForDateTime formaterForDateTime = new IsoWithZoneFormater();
+
+        public ZonedDateTime parse(String date) {
+            return ZonedDateTime.from(DateTimeFormatter.ISO_DATE_TIME.parse(date));
+        }
+
+        public String format(ZonedDateTime date) {
+            return DateTimeFormatter.ISO_DATE_TIME.format(date);
+        }
+    }
+
+    static class IsoFastOffsetFormater implements FormaterForDateTime {
+        private static IsoFastOffsetFormater formater = new IsoFastOffsetFormater();
+
+        public ZonedDateTime parse(String date) {
+            return ISO8601Utils.parse(date);
+        }
+
+        public String format(ZonedDateTime date) {
+            return ISO8601Utils.format(date, false, true);
+        }
+    }
+
+    static class IsoFastStrictOffsetFormater implements FormaterForDateTime {
+        private static IsoFastStrictOffsetFormater formater = new IsoFastStrictOffsetFormater();
+
+        public ZonedDateTime parse(String date) {
+            return ISO8601Utils.parse(date);
+        }
+
+        public String format(ZonedDateTime date) {
+            return ISO8601Utils.format(date, false, false);
+        }
+    }
+
+    public static FormaterForDateTime getCachedDateTimeFormatter(DateTimeField field) {
+        final FormaterForDateTime formaterForDateTime = CACHE_DATE_TIME.get(field);
+        if (formaterForDateTime != null) {
+            return formaterForDateTime;
+        }
+        FormaterForDateTime dateConverter;
+        Glob annotation = field.findAnnotation(JsonDateTimeFormatType.UNIQUE_KEY);
+        if (annotation != null) {
+            if (annotation.isTrue(JsonDateTimeFormatType.useFastIso8601)) {
+                dateConverter = IsoFastOffsetFormater.formater;
+            } else if (annotation.isTrue(JsonDateTimeFormatType.strictIso8601)) {
+                dateConverter = IsoFastStrictOffsetFormater.formater;
+            } else {
+                String pattern = annotation.get(JsonDateTimeFormatType.format);
+                if (Strings.isNotEmpty(pattern)) {
+                    final boolean forceLocal = annotation.isTrue(JsonDateTimeFormatType.useLocalZone);
+                    if (forceLocal) {
+                        dateConverter = new DefaultLocalFormater(DateTimeFormatter.ofPattern(pattern), ZoneId.systemDefault());
+                    }
+                    else {
+                        dateConverter = new DefaultFormater(DateTimeFormatter.ofPattern(pattern));
+                    }
+                } else {
+                    dateConverter = IsoWithZoneFormater.formaterForDateTime;
+                }
+            }
+            final String s = annotation.get(JsonDateTimeFormatType.nullValue);
+            if (Strings.isNotEmpty(s)) {
+                dateConverter = new FilterNullFormater(s, dateConverter);
+            }
+        } else {
+            dateConverter = IsoWithZoneFormater.formaterForDateTime;
+        }
+        CACHE_DATE_TIME.put(field, dateConverter);
         return dateConverter;
     }
 
@@ -505,6 +608,26 @@ public class GSonUtils {
         }
 
         public void close() {
+        }
+    }
+
+    private static class FilterNullFormater implements FormaterForDateTime {
+        private final String dateToIgnore;
+        private final FormaterForDateTime dateConverter;
+
+        public FilterNullFormater(String DateToIgnore, FormaterForDateTime dateConverter) {
+            dateToIgnore = DateToIgnore;
+            this.dateConverter = dateConverter;
+        }
+
+        @Override
+        public ZonedDateTime parse(String date) {
+            return dateToIgnore.equalsIgnoreCase(date) ? null : dateConverter.parse(date);
+        }
+
+        @Override
+        public String format(ZonedDateTime date) {
+            return dateConverter.format(date);
         }
     }
 }

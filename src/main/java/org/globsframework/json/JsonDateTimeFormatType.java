@@ -12,13 +12,15 @@ import org.globsframework.model.Key;
 public class JsonDateTimeFormatType {
     public static GlobType TYPE;
 
-    public static StringField FORMAT;
+    public static StringField format;
 
     public static BooleanField strictIso8601;
 
-    public static BooleanField AS_LOCAL;
+    public static BooleanField useFastIso8601;
 
-    public static StringField NULL_VALUE;
+    public static BooleanField useLocalZone;
+
+    public static StringField nullValue;
 
     @InitUniqueKey
     public static Key UNIQUE_KEY;
@@ -26,9 +28,9 @@ public class JsonDateTimeFormatType {
     static {
         GlobTypeLoaderFactory.create(JsonDateTimeFormatType.class, "jsonDateTimeFormat")
               .register(GlobCreateFromAnnotation.class, annotation -> TYPE.instantiate()
-                      .set(FORMAT, ((JsonDateTimeFormatAnnotation) annotation).pattern())
-                      .set(AS_LOCAL, ((JsonDateTimeFormatAnnotation) annotation).asLocal())
-                      .set(NULL_VALUE, ((JsonDateTimeFormatAnnotation) annotation).nullValue())
+                      .set(format, ((JsonDateTimeFormatAnnotation) annotation).pattern())
+                      .set(useLocalZone, ((JsonDateTimeFormatAnnotation) annotation).asLocal())
+                      .set(nullValue, ((JsonDateTimeFormatAnnotation) annotation).nullValue())
                       .set(strictIso8601, ((JsonDateTimeFormatAnnotation) annotation).strictIso8601())
               )
               .load();

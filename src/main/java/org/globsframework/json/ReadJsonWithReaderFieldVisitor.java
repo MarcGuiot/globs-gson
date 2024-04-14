@@ -171,31 +171,29 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
         mutableGlob.set(field, Arrays.copyOf(values, count));
     }
 
-
     public void visitDate(DateField field, FieldSetter mutableGlob, JsonReader jsonReader) throws Exception {
         DateTimeFormatter dateConverter = GSonUtils.getCachedDateFormatter(field);
         mutableGlob.set(field, LocalDate.from(dateConverter.parse(jsonReader.nextString())));
     }
 
-
     // gestion a revoir
 
     public void visitDateTime(DateTimeField field, FieldSetter mutableGlob, JsonReader jsonReader) throws Exception {
-        DateTimeFormatter dateConverter = GSonUtils.getCachedDateTimeFormatter(field);
+        GSonUtils.FormaterForDateTime dateConverter = GSonUtils.getCachedDateTimeFormatter(field);
         String text = jsonReader.nextString();
-        if (field.hasAnnotation(JsonDateTimeFormatType.UNIQUE_KEY)) {
-            Glob annotation = field.getAnnotation(JsonDateTimeFormatType.UNIQUE_KEY);
-            String nullValue = annotation.get(JsonDateTimeFormatType.NULL_VALUE);
-            if (text.equals(nullValue) || "".equals(text)) {
-                return;
-            }
-            Boolean aBoolean = annotation.get(JsonDateTimeFormatType.AS_LOCAL);
-            if (aBoolean) {
-                mutableGlob.set(field, ZonedDateTime.of(LocalDateTime.from(dateConverter.parse(text)), ZoneId.systemDefault()));
-                return;
-            }
-        }
-        mutableGlob.set(field, ZonedDateTime.from(dateConverter.parse(text)));
+//        if (field.hasAnnotation(JsonDateTimeFormatType.UNIQUE_KEY)) {
+//            Glob annotation = field.getAnnotation(JsonDateTimeFormatType.UNIQUE_KEY);
+//            String nullValue = annotation.get(JsonDateTimeFormatType.NULL_VALUE);
+//            if (text.equals(nullValue) || "".equals(text)) {
+//                return;
+//            }
+//            Boolean aBoolean = annotation.get(JsonDateTimeFormatType.AS_LOCAL);
+//            if (aBoolean) {
+//                mutableGlob.set(field, ZonedDateTime.of(LocalDateTime.from(dateConverter.parse(text)), ZoneId.systemDefault()));
+//                return;
+//            }
+//        }
+        mutableGlob.set(field, dateConverter.parse(text));
     }
 
     public void visitBlob(BlobField field, FieldSetter mutableGlob, JsonReader jsonReader) throws Exception {
