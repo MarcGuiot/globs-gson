@@ -1,4 +1,4 @@
-The library use com.google.code.gson to encode and decode json to and from Globs.
+The library use com.google.code.gson to encode and decode json to and from Globs (without introspection)
 It produces standard json and mostly all the json can be read directly to globs.
 There is additinal annotation to parse json where a field is a value. For exemple the OpenApi json format put the http code as value:
 ```
@@ -10,9 +10,13 @@ There is additinal annotation to parse json where a field is a value. For exempl
        }    
 ```
 
-When the Gson is read and write using Globs the attribut _kind can be added. It allow the reader to instantiate the corre Glob by finding the sponding GlobType in the Model.
+When the Gson is read and write using Globs the attribut _kind can be added. It allow the reader to instantiate the Glob by finding the corresponding GlobType in the Model.
+Else the GlobType must be provided
+```
+            Glob decode = GSonUtils.decode(new StringReader("{\"id\":24,\"name\":\"TEST éè\",\"arrival\":\"2019-09-13 13:15:21\"}"), LocalType.TYPE);
+```
 
-For exemple a Shopify product look like this :
+An exemple for a Shopify product :
 ```
 {
   "admin_graphql_api_id": "gid:\/\/shopify\/Product\/6918907461686",
