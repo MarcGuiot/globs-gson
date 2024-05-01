@@ -10,7 +10,7 @@ There is additinal annotation to parse json where a field is a value. For exempl
        }    
 ```
 
-When the Gson is read and write using Globs the attribut _kind can be added. It allow the reader to instantiate the wright Glob by finding the GlobType in the Model.
+When the Gson is read and write using Globs the attribut _kind can be added. It allow the reader to instantiate the corre Glob by finding the sponding GlobType in the Model.
 
 For exemple a Shopify product like :
 ```
