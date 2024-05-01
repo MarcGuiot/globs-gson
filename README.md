@@ -12,7 +12,7 @@ There is additinal annotation to parse json where a field is a value. For exempl
 
 When the Gson is read and write using Globs the attribut _kind can be added. It allow the reader to instantiate the corre Glob by finding the sponding GlobType in the Model.
 
-For exemple a Shopify product like :
+For exemple a Shopify product look like this :
 ```
 {
   "admin_graphql_api_id": "gid:\/\/shopify\/Product\/6918907461686",
@@ -43,7 +43,9 @@ For exemple a Shopify product like :
       "price": "1.66",
 ```
 
-Can be read using GlobType : 
+this json can be read using the floowing GlobType.
+And the json can be produce back.
+The fact that he glob differentiate null and unset allow the library to generate json field only for unset field.
 ```
 public class ShopifyProductType {
     public static final String resourceType = "product";
