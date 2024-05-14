@@ -1,7 +1,7 @@
 package org.globsframework.json;
 
 import com.google.gson.stream.JsonWriter;
-import org.globsframework.metamodel.Field;
+import org.globsframework.metamodel.fields.Field;
 import org.globsframework.model.*;
 
 import java.io.IOException;
