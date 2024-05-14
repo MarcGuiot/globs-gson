@@ -19,8 +19,6 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -28,8 +26,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public class GlobsGsonAdapterTest {
 

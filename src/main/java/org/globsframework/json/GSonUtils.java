@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonWriter;
 import org.globsframework.functional.FunctionalKey;
 import org.globsframework.json.annottations.JsonDateFormatType;
 import org.globsframework.json.helper.ISO8601Utils;
-import org.globsframework.metamodel.Field;
+import org.globsframework.metamodel.fields.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeResolver;
 import org.globsframework.metamodel.fields.DateField;

@@ -4,7 +4,7 @@ import com.google.gson.stream.JsonWriter;
 import org.globsframework.json.annottations.IsJsonContentType;
 import org.globsframework.json.annottations.JsonAsObjectType;
 import org.globsframework.json.annottations.JsonValueAsFieldType;
-import org.globsframework.metamodel.Field;
+import org.globsframework.metamodel.fields.Field;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.Glob;
 
