@@ -33,8 +33,7 @@ public class GlobTypeSetAdapter extends TypeAdapter<GlobTypeSet> {
     }
 
     public GlobTypeSet read(JsonReader in) throws IOException {
-        JsonParser jsonParser = new JsonParser();
-        JsonElement root = jsonParser.parse(in);
+        JsonElement root = JsonParser.parseReader(in);
         if (root == null || root == JsonNull.INSTANCE) {
             return new GlobTypeSet(new GlobType[0]);
         }

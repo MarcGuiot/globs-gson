@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -536,7 +537,8 @@ public class GlobsGsonAdapterTest {
     public void failParse() throws UnsupportedEncodingException {
         Gson gson = GlobsGson.create(name -> null);
         String jsonType = "{\"kind\":\"with \\u0026éè\",\"fields\":{\"name\":{\"type\":\"string\"}}}";
-        JsonElement root = new JsonParser().parse(new InputStreamReader(new ByteArrayInputStream(jsonType.getBytes("UTF-8")), "UTF-8"));
+        JsonElement root = JsonParser.parseReader(new InputStreamReader(new ByteArrayInputStream(
+                jsonType.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8));
 
         root.getAsJsonObject();
         GlobType globType = gson.fromJson(jsonType, GlobType.class);

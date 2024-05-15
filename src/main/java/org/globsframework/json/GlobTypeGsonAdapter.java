@@ -195,8 +195,7 @@ class GlobTypeGsonAdapter extends TypeAdapter<GlobType> {
 
 
     public GlobType read(JsonReader in) {
-        JsonParser jsonParser = new JsonParser();
-        return globTypeGsonDeserializer.deserialize(jsonParser.parse(in));
+        return globTypeGsonDeserializer.deserialize(JsonParser.parseReader(in));
     }
 
     private static class JsonUnionFieldWriterConsumer implements Consumer<JsonWriter> {
