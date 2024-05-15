@@ -56,7 +56,7 @@ public class LoadingGlobTypeResolver implements GlobTypeResolver {
     }
 
     private static void extractJsonType(Reader streamReader, Map<String, JsonObject> jsonTypes) {
-        JsonElement root = new JsonParser().parse(streamReader);
+        JsonElement root = JsonParser.parseReader(streamReader);
         if (root.isJsonArray()) {
             JsonArray arrayOfJsonGlobType = root.getAsJsonArray();
             for (JsonElement element : arrayOfJsonGlobType) {
