@@ -42,7 +42,7 @@ class GlobTypeGsonAdapter extends TypeAdapter<GlobType> {
             out.name(GlobsGson.FIELDS)
                     .beginObject();
             for (Field field : type.getFields()) {
-                field.safeVisit(new FieldVisitor() {
+                field.safeAccept(new FieldVisitor() {
 
                     public void visitInteger(IntegerField field) throws Exception {
                         writeField(field, GlobsGson.INT_TYPE, out);

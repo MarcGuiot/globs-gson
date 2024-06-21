@@ -96,7 +96,7 @@ public class PreChangeSetGsonAdapter extends TypeAdapter<PreChangeSet> {
         for (Field field : fields) {
             JsonElement jsonElement = jsonObject.get(field.getName());
             if (jsonElement != null && !jsonElement.isJsonNull()) {
-                field.safeVisit(jsonReaderVisitor, jsonElement, keyBuilder);
+                field.safeAccept(jsonReaderVisitor, jsonElement, keyBuilder);
             }
         }
         return keyBuilder.get();
@@ -115,7 +115,7 @@ public class PreChangeSetGsonAdapter extends TypeAdapter<PreChangeSet> {
             if (value == null || value.isJsonNull()) {
                 values.setValue(field, null);
             } else {
-                field.safeVisit(jsonReaderVisitor, value, new AbstractFieldSetter() {
+                field.safeAccept(jsonReaderVisitor, value, new AbstractFieldSetter() {
                     public FieldSetter setValue(Field field1, Object value) throws ItemNotFound {
                         values.setValue(field1, value);
                         return this;
@@ -153,7 +153,7 @@ public class PreChangeSetGsonAdapter extends TypeAdapter<PreChangeSet> {
             KeyBuilder keyBuilder = KeyBuilder.create(globType);
             if (keyFields.length != 0) {
                 for (Field keyField : keyFields) {
-                    keyField.safeVisit(this, jsonObject.get(keyField.getName()), keyBuilder);
+                    keyField.safeAccept(this, jsonObject.get(keyField.getName()), keyBuilder);
                 }
                 return keyBuilder.get();
             } else {

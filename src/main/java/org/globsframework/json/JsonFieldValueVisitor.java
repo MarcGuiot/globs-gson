@@ -198,7 +198,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
                 glob.safeAccept(new AbstractFieldValueVisitor(){
                     public void notManaged(Field field, Object value) throws Exception {
                         if (field != fieldValueToUseAsName) {
-                            field.safeVisit(JsonFieldValueVisitor.this, value);
+                            field.safeAccept(JsonFieldValueVisitor.this, value);
                         }
                     }
                 });

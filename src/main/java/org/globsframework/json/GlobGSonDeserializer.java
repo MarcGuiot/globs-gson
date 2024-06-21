@@ -70,7 +70,7 @@ public class GlobGSonDeserializer {
         for (Field field : globType.getFields()) {
             JsonElement jsonElement = jsonObject.get(field.getName());
             if (jsonElement != null) {
-                field.safeVisit(G_SON_VISITOR, jsonElement, instantiate);
+                field.safeAccept(G_SON_VISITOR, jsonElement, instantiate);
             }
         }
         return instantiate;
@@ -88,7 +88,7 @@ public class GlobGSonDeserializer {
             Field field = globType.findField(name);
             if (field != null) {
                 if (in.peek() != JsonToken.NULL) {
-                    field.safeVisit(fieldVisitor, instantiate, in);
+                    field.safeAccept(fieldVisitor, instantiate, in);
                 } else {
                     in.skipValue();
                     instantiate.setValue(field, null);
@@ -155,7 +155,7 @@ public class GlobGSonDeserializer {
         for (Map.Entry<String, JsonElement> stringJsonElementEntry : values.entrySet()) {
             Field field = type.findField(stringJsonElementEntry.getKey());
             if (field != null) {
-                field.safeVisit(G_SON_VISITOR, stringJsonElementEntry.getValue(), instantiate);
+                field.safeAccept(G_SON_VISITOR, stringJsonElementEntry.getValue(), instantiate);
             }
         }
         return instantiate;
@@ -177,7 +177,7 @@ public class GlobGSonDeserializer {
         for (Map.Entry<String, JsonElement> stringJsonElementEntry : values.entrySet()) {
             Field field = type.findField(stringJsonElementEntry.getKey());
             if (field != null) {
-                field.safeVisit(G_SON_VISITOR, stringJsonElementEntry.getValue(), instantiate);
+                field.safeAccept(G_SON_VISITOR, stringJsonElementEntry.getValue(), instantiate);
             }
         }
         return instantiate.get();
