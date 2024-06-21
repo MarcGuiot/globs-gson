@@ -13,7 +13,7 @@ public class ChangeSetGsonAdapter extends TypeAdapter<ChangeSet> {
     }
 
     public void write(JsonWriter out, ChangeSet changeSet) throws IOException {
-        ChangeValuesGsonAdapter.write(out, changeSet::safeVisit);
+        ChangeValuesGsonAdapter.write(out, changeSet::safeAccept);
     }
 
     public ChangeSet read(JsonReader in) throws IOException {
