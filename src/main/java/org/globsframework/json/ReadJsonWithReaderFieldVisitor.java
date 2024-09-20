@@ -4,15 +4,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.fields.*;
+import org.globsframework.core.model.FieldSetter;
+import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.MutableGlob;
 import org.globsframework.json.annottations.IsJsonContentType;
 import org.globsframework.json.annottations.JsonAsObjectType;
 import org.globsframework.json.annottations.JsonValueAsFieldType;
-import org.globsframework.metamodel.fields.Field;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.fields.*;
-import org.globsframework.model.FieldSetter;
-import org.globsframework.model.Glob;
-import org.globsframework.model.MutableGlob;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -227,8 +226,7 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
                 jsonReader.endObject();
                 objs.add(newObj);
             }
-        }
-        else {
+        } else {
             jsonReader.beginArray();
             while (jsonReader.peek() != JsonToken.END_ARRAY) {
                 jsonReader.beginObject();

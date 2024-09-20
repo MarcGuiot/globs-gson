@@ -3,16 +3,22 @@ package org.globsframework.json;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import org.globsframework.core.metamodel.GlobModel;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeBuilder;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.AllAnnotations;
+import org.globsframework.core.metamodel.annotations.FieldNameAnnotation;
+import org.globsframework.core.metamodel.annotations.KeyField;
+import org.globsframework.core.metamodel.annotations.Required;
+import org.globsframework.core.metamodel.fields.*;
+import org.globsframework.core.metamodel.impl.DefaultGlobModel;
+import org.globsframework.core.metamodel.impl.DefaultGlobTypeBuilder;
+import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.Key;
+import org.globsframework.core.model.MutableGlob;
 import org.globsframework.json.annottations.IsJsonContentAnnotation;
 import org.globsframework.json.annottations.IsJsonContentType;
-import org.globsframework.metamodel.*;
-import org.globsframework.metamodel.annotations.*;
-import org.globsframework.metamodel.fields.*;
-import org.globsframework.metamodel.impl.DefaultGlobModel;
-import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
-import org.globsframework.model.Glob;
-import org.globsframework.model.Key;
-import org.globsframework.model.MutableGlob;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -178,10 +184,9 @@ public class GlobsGsonAdapterTest {
                 "  \"value\": null\n" +
                 "}";
         Glob decoded = gson.fromJson(toJson, Glob.class);
-        Assert.assertNull( decoded.get(LocalType.NAME));
-        Assert.assertNull( decoded.get(LocalType.VALUE));
+        Assert.assertNull(decoded.get(LocalType.NAME));
+        Assert.assertNull(decoded.get(LocalType.VALUE));
     }
-
 
 
     static class Data {
@@ -455,7 +460,7 @@ public class GlobsGsonAdapterTest {
                 .set(stringArray, new String[]{"un", "deux", "trois"})
                 .set(jsonObjectString, "{\"arg1\":\"vale1\",\"v\":2}")
                 .set(jsonObjectStringArray, new String[]{"{\"arg1\":\"value1\",\"v\":2}", "{\"arg1\":\"value3\",\"v\":3}"})
-                .set(globArrayUnionField, new Glob[] {
+                .set(globArrayUnionField, new Glob[]{
                         innerType.instantiate().set(valueField, 3).set(dateField, 17000),
                         innerType2.instantiate().set(valueField2, 2.8).set(dateField2, 17001)})
                 .set(jsonArrayString, "[\"a\",\"b\"]")
@@ -470,7 +475,7 @@ public class GlobsGsonAdapterTest {
                 .set(dateTime, ZonedDateTime.of(2018, 2, 4, 15, 45, 34, 1000, ZoneId.of("Europe/Paris")))
                 .set(blob, new byte[]{3, 4})
                 .set(globField, innerType.instantiate().set(valueField, 3).set(dateField, 17000))
-                .set(globArrayField, new Glob[] {innerType.instantiate().set(valueField, 3).set(dateField, 17000),
+                .set(globArrayField, new Glob[]{innerType.instantiate().set(valueField, 3).set(dateField, 17000),
                         innerType.instantiate().set(valueField, 2.8).set(dateField, 17001),
                         innerType.instantiate().set(valueField, 2.7).set(dateField, 17002)});
 
@@ -494,7 +499,7 @@ public class GlobsGsonAdapterTest {
             StringBuilder v2 = new StringBuilder();
             field.toString(v2, instantiate.getValue(field));
             Assert.assertTrue(field.getName() + " : " +
-                             v1.toString() + "->" + v2.toString(),
+                            v1.toString() + "->" + v2.toString(),
                     field.valueEqual(glob.getValue(field), instantiate.getValue(field)));
         }
     }
@@ -503,13 +508,13 @@ public class GlobsGsonAdapterTest {
     public void withUnknownField() {
         Gson gson = init();
         Glob glob = gson.fromJson("{\"_kind\": \"test local type\", \"a different name\": \"my name\", \"PI\": 3.3}", Glob.class);
-        Assert.assertEquals(glob.get(LocalType.NAME),"my name");
+        Assert.assertEquals(glob.get(LocalType.NAME), "my name");
 
         glob = gson.fromJson("{\"_kind\": \"test local type\", \"a different name\": \"my name\", \"PI\": { \"O\":3.3 }}", Glob.class);
-        Assert.assertEquals(glob.get(LocalType.NAME),"my name");
+        Assert.assertEquals(glob.get(LocalType.NAME), "my name");
 
         glob = gson.fromJson("{\"_kind\": \"test local type\", \"a different name\": \"my name\", \"PI\": []}", Glob.class);
-        Assert.assertEquals(glob.get(LocalType.NAME),"my name");
+        Assert.assertEquals(glob.get(LocalType.NAME), "my name");
 
     }
 
@@ -530,7 +535,7 @@ public class GlobsGsonAdapterTest {
         Assert.assertEquals("{\"kind\":\"#$\\\"\\\\é\\u0026à@\",\"fields\":[{\"name\":\"data\",\"type\":\"string\"}]}", jsonType);
 
         GlobType globType = gson.fromJson(jsonType, GlobType.class);
-        Assert.assertEquals(ComplexClassName.TYPE.getName(),globType.getName());
+        Assert.assertEquals(ComplexClassName.TYPE.getName(), globType.getName());
     }
 
     @Test

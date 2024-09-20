@@ -2,10 +2,10 @@ package org.globsframework.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.model.ChangeSet;
-import org.globsframework.model.Glob;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeResolver;
+import org.globsframework.core.model.ChangeSet;
+import org.globsframework.core.model.Glob;
 
 public class GlobsGson {
 
@@ -44,6 +44,7 @@ public class GlobsGson {
     static public GsonBuilder createBuilder(GlobTypeResolver globTypeResolver) {
         return createBuilder(globTypeResolver, true);
     }
+
     static public GsonBuilder createBuilder(GlobTypeResolver globTypeResolver, boolean ignoreUnknownAnnotation) {
         return new GsonBuilder()
 //              .registerTypeHierarchyAdapter(GlobType.class, new GlobTypeGsonAdapter(false, globTypeResolver))

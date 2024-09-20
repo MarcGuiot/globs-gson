@@ -1,9 +1,9 @@
 package org.globsframework.json.helper;
 
 import com.google.gson.*;
-import org.globsframework.metamodel.GlobTypeResolver;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeResolver;
 import org.globsframework.json.GlobsGson;
-import org.globsframework.metamodel.GlobType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +20,7 @@ public class LoadingGlobTypeResolver implements GlobTypeResolver {
     private GlobTypeAccessor globTypeResolver;
 
     private LoadingGlobTypeResolver(GlobTypeAccessor globTypeResolver,
-                                   Map<String, JsonObject> typesToLoad) {
+                                    Map<String, JsonObject> typesToLoad) {
         this.globTypeResolver = globTypeResolver;
         this.typesToLoad = typesToLoad;
     }
@@ -68,11 +68,9 @@ public class LoadingGlobTypeResolver implements GlobTypeResolver {
             JsonObject asJsonObject = root.getAsJsonObject();
             String kind = asJsonObject.get(GlobsGson.GLOB_TYPE_KIND).getAsString();
             jsonTypes.put(kind, asJsonObject);
-        }
-        else if (root.isJsonNull()){
+        } else if (root.isJsonNull()) {
             //ignore
-        }
-        else{
+        } else {
             throw new RuntimeException(root.toString() + " should be an array of glob type or a glob type");
         }
     }

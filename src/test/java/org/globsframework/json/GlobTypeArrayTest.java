@@ -1,9 +1,9 @@
 package org.globsframework.json;
 
 import com.google.gson.Gson;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.annotations.FieldNameAnnotationType;
-import org.globsframework.metamodel.GlobTypeResolver;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeResolver;
+import org.globsframework.core.metamodel.annotations.FieldNameAnnotationType;
 import org.junit.Assert;
 import org.junit.Test;
 

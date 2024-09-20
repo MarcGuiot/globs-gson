@@ -3,7 +3,7 @@ package org.globsframework.json;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.globsframework.model.*;
+import org.globsframework.core.model.ChangeSet;
 
 import java.io.IOException;
 

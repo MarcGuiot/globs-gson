@@ -3,15 +3,15 @@ package org.globsframework.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeBuilder;
-import org.globsframework.metamodel.annotations.AllAnnotations;
-import org.globsframework.metamodel.fields.DoubleField;
-import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.metamodel.impl.DefaultGlobModel;
-import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
-import org.globsframework.model.Glob;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeBuilder;
+import org.globsframework.core.metamodel.annotations.AllAnnotations;
+import org.globsframework.core.metamodel.fields.DoubleField;
+import org.globsframework.core.metamodel.fields.IntegerField;
+import org.globsframework.core.metamodel.fields.StringField;
+import org.globsframework.core.metamodel.impl.DefaultGlobModel;
+import org.globsframework.core.metamodel.impl.DefaultGlobTypeBuilder;
+import org.globsframework.core.model.Glob;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -115,7 +115,7 @@ public class PerfReadWriteTest {
     private String write(Gson gson, Glob[] array) {
         long start = System.nanoTime();
         StringBuilder writer = new StringBuilder();
-        for (int i = 0 ; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             writer = new StringBuilder();
             writer.append(GSonUtils.encode(array, false));
 //            gson.toJson(collect, new GSonUtils.StringWriterToBuilder(writer));
@@ -128,7 +128,7 @@ public class PerfReadWriteTest {
     private String writePlain(List<PlainJavaObject> collect, Gson gson) {
         long start = System.nanoTime();
         StringBuilder writer = new StringBuilder();
-        for (int i = 0 ; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             writer = new StringBuilder();
             gson.toJson(collect, new GSonUtils.StringWriterToBuilder(writer));
         }
@@ -139,7 +139,7 @@ public class PerfReadWriteTest {
 
     private void read(String s, GlobType globType) {
         long start = System.nanoTime();
-        for (int i = 0 ; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             Glob[] globList = GSonUtils.decodeArray(s, globType);
             Assert.assertEquals(globList.length, 1000);
         }
@@ -149,7 +149,7 @@ public class PerfReadWriteTest {
 
     private void readPlain(Gson gson, String s) {
         long start = System.nanoTime();
-        for (int i = 0 ; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             List<Glob> globList = gson.fromJson(new GSonUtils.NoLockStringReader(s), new TypeToken<List<PlainJavaObject>>() {
             }.getType());
             Assert.assertEquals(globList.size(), 1000);

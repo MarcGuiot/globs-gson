@@ -3,11 +3,11 @@ package org.globsframework.json;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeResolver;
+import org.globsframework.core.metamodel.fields.Field;
+import org.globsframework.core.model.*;
 import org.globsframework.json.annottations.UnknownAnnotation;
-import org.globsframework.metamodel.fields.Field;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

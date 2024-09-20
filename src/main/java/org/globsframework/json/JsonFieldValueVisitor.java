@@ -1,12 +1,11 @@
 package org.globsframework.json;
 
 import com.google.gson.stream.JsonWriter;
+import org.globsframework.core.metamodel.fields.*;
+import org.globsframework.core.model.Glob;
 import org.globsframework.json.annottations.IsJsonContentType;
 import org.globsframework.json.annottations.JsonAsObjectType;
 import org.globsframework.json.annottations.JsonValueAsFieldType;
-import org.globsframework.metamodel.fields.Field;
-import org.globsframework.metamodel.fields.*;
-import org.globsframework.model.Glob;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -195,7 +194,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
                 jsonWriter.name(Objects.toString(value1));
                 jsonWriter.beginObject();
 
-                glob.safeAccept(new AbstractFieldValueVisitor(){
+                glob.safeAccept(new AbstractFieldValueVisitor() {
                     public void notManaged(Field field, Object value) throws Exception {
                         if (field != fieldValueToUseAsName) {
                             field.safeAccept(JsonFieldValueVisitor.this, value);
@@ -206,8 +205,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
                 jsonWriter.endObject();
             }
             jsonWriter.endObject();
-        }
-        else {
+        } else {
             jsonWriter.name(field.getName());
             if (value != null) {
                 jsonWriter.beginArray();
@@ -236,8 +234,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
             addGlobAttributes(value);
             jsonWriter.endObject();
             jsonWriter.endObject();
-        }
-        else {
+        } else {
             jsonWriter.nullValue();
         }
     }
@@ -255,8 +252,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
-        }
-        else {
+        } else {
             jsonWriter.nullValue();
         }
     }

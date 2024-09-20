@@ -1,15 +1,15 @@
 package org.globsframework.json;
 
 import junit.framework.Assert;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.Target;
+import org.globsframework.core.metamodel.fields.GlobArrayField;
+import org.globsframework.core.metamodel.fields.StringField;
+import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.MutableGlob;
 import org.globsframework.json.annottations.JsonAsObject;
 import org.globsframework.json.annottations.JsonValueAsField;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.annotations.Target;
-import org.globsframework.metamodel.fields.GlobArrayField;
-import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.model.Glob;
-import org.globsframework.model.MutableGlob;
 import org.junit.Test;
 
 public class ComplexJsonTest {
@@ -37,7 +37,6 @@ public class ComplexJsonTest {
         Assert.assertEquals("b2", newA.get(A.b)[1].get(B.name));
         Assert.assertEquals("o2", newA.get(A.b)[1].get(B.otherField));
     }
-
 
 
     public static class A {

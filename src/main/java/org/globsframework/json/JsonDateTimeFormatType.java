@@ -1,13 +1,13 @@
 package org.globsframework.json;
 
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.GlobCreateFromAnnotation;
+import org.globsframework.core.metamodel.annotations.InitUniqueKey;
+import org.globsframework.core.metamodel.fields.BooleanField;
+import org.globsframework.core.metamodel.fields.StringField;
+import org.globsframework.core.model.Key;
 import org.globsframework.json.annottations.JsonDateTimeFormatAnnotation;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.annotations.GlobCreateFromAnnotation;
-import org.globsframework.metamodel.annotations.InitUniqueKey;
-import org.globsframework.metamodel.fields.BooleanField;
-import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.model.Key;
 
 public class JsonDateTimeFormatType {
     public static GlobType TYPE;
@@ -27,13 +27,13 @@ public class JsonDateTimeFormatType {
 
     static {
         GlobTypeLoaderFactory.create(JsonDateTimeFormatType.class, "jsonDateTimeFormat")
-              .register(GlobCreateFromAnnotation.class, annotation -> TYPE.instantiate()
-                      .set(format, ((JsonDateTimeFormatAnnotation) annotation).pattern())
-                      .set(useLocalZone, ((JsonDateTimeFormatAnnotation) annotation).asLocal())
-                      .set(nullValue, ((JsonDateTimeFormatAnnotation) annotation).nullValue())
-                      .set(strictIso8601, ((JsonDateTimeFormatAnnotation) annotation).strictIso8601())
-              )
-              .load();
+                .register(GlobCreateFromAnnotation.class, annotation -> TYPE.instantiate()
+                        .set(format, ((JsonDateTimeFormatAnnotation) annotation).pattern())
+                        .set(useLocalZone, ((JsonDateTimeFormatAnnotation) annotation).asLocal())
+                        .set(nullValue, ((JsonDateTimeFormatAnnotation) annotation).nullValue())
+                        .set(strictIso8601, ((JsonDateTimeFormatAnnotation) annotation).strictIso8601())
+                )
+                .load();
     }
 
 }

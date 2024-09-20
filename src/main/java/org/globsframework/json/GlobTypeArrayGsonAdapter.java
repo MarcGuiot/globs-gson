@@ -4,13 +4,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeResolver;
+import org.globsframework.core.metamodel.annotations.FieldNameAnnotationType;
+import org.globsframework.core.metamodel.fields.*;
+import org.globsframework.core.model.Glob;
 import org.globsframework.json.annottations.UnknownAnnotation;
-import org.globsframework.metamodel.fields.Field;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.annotations.FieldNameAnnotationType;
-import org.globsframework.metamodel.fields.*;
-import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.model.Glob;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -178,8 +177,7 @@ class GlobTypeArrayGsonAdapter extends TypeAdapter<GlobType> {
             for (Glob glob : collect) {
                 if (glob.getType().equals(UnknownAnnotation.TYPE)) {
                     out.jsonValue(glob.get(UnknownAnnotation.CONTENT));
-                }
-                else {
+                } else {
                     globGsonAdapter.write(out, glob);
                 }
             }

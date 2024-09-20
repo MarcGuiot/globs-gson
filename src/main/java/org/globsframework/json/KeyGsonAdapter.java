@@ -2,9 +2,9 @@ package org.globsframework.json;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.model.Key;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeResolver;
+import org.globsframework.core.model.Key;
 
 import java.io.IOException;
 

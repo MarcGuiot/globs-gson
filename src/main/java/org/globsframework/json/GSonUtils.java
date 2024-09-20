@@ -5,19 +5,19 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import org.globsframework.functional.FunctionalKey;
+import org.globsframework.core.functional.FunctionalKey;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeResolver;
+import org.globsframework.core.metamodel.fields.DateField;
+import org.globsframework.core.metamodel.fields.DateTimeField;
+import org.globsframework.core.metamodel.fields.Field;
+import org.globsframework.core.model.FieldSetter;
+import org.globsframework.core.model.FieldValues;
+import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.Key;
+import org.globsframework.core.utils.Strings;
 import org.globsframework.json.annottations.JsonDateFormatType;
 import org.globsframework.json.helper.ISO8601Utils;
-import org.globsframework.metamodel.fields.Field;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.metamodel.fields.DateField;
-import org.globsframework.metamodel.fields.DateTimeField;
-import org.globsframework.model.FieldSetter;
-import org.globsframework.model.FieldValues;
-import org.globsframework.model.Glob;
-import org.globsframework.model.Key;
-import org.globsframework.utils.Strings;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -269,7 +269,7 @@ public class GSonUtils {
         }
     }
 
-    public static DateTimeFormatter getCachedDateFormatter(DateField field)     {
+    public static DateTimeFormatter getCachedDateFormatter(DateField field) {
         DateTimeFormatter dateConverter;
         if (field.hasAnnotation(JsonDateFormatType.UNIQUE_KEY)) {
             Glob annotation = field.getAnnotation(JsonDateFormatType.UNIQUE_KEY);
@@ -384,8 +384,7 @@ public class GSonUtils {
                     final boolean forceLocal = annotation.isTrue(JsonDateTimeFormatType.useLocalZone);
                     if (forceLocal) {
                         dateConverter = new DefaultLocalFormater(DateTimeFormatter.ofPattern(pattern), ZoneId.systemDefault());
-                    }
-                    else {
+                    } else {
                         dateConverter = new DefaultFormater(DateTimeFormatter.ofPattern(pattern));
                     }
                 } else {
@@ -565,7 +564,7 @@ public class GSonUtils {
 
         public int read(char cbuf[], int off, int len) throws IOException {
             if ((off < 0) || (off > cbuf.length) || (len < 0) ||
-                ((off + len) > cbuf.length) || ((off + len) < 0)) {
+                    ((off + len) > cbuf.length) || ((off + len) < 0)) {
                 throw new IndexOutOfBoundsException();
             } else if (len == 0) {
                 return 0;

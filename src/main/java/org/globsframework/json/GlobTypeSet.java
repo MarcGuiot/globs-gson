@@ -1,14 +1,12 @@
 package org.globsframework.json;
 
-import org.globsframework.metamodel.fields.Field;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.fields.GlobArrayField;
-import org.globsframework.metamodel.fields.GlobArrayUnionField;
-import org.globsframework.metamodel.fields.GlobField;
-import org.globsframework.metamodel.fields.GlobUnionField;
-import org.globsframework.model.Glob;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.fields.*;
+import org.globsframework.core.model.Glob;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class GlobTypeSet {
     public final GlobType[] globType;

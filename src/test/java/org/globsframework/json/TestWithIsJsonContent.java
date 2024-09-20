@@ -1,11 +1,11 @@
 package org.globsframework.json;
 
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.fields.StringField;
+import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.MutableGlob;
 import org.globsframework.json.annottations.IsJsonContentAnnotation;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.model.Glob;
-import org.globsframework.model.MutableGlob;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,6 +32,7 @@ public class TestWithIsJsonContent {
         public static GlobType TYPE;
         @IsJsonContentAnnotation
         public static StringField value;
+
         static {
             GlobTypeLoaderFactory.create(TypeWithJsonAttr.class).load();
         }

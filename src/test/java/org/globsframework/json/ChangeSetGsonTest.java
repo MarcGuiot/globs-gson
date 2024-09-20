@@ -1,20 +1,20 @@
 package org.globsframework.json;
 
 import com.google.gson.Gson;
-import org.globsframework.metamodel.GlobModel;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.annotations.KeyField;
-import org.globsframework.metamodel.annotations.Target;
-import org.globsframework.metamodel.fields.GlobArrayField;
-import org.globsframework.metamodel.fields.GlobField;
-import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.metamodel.impl.DefaultGlobModel;
-import org.globsframework.model.*;
-import org.globsframework.model.delta.DefaultChangeSet;
-import org.globsframework.model.delta.MutableChangeSet;
-import org.globsframework.model.format.GlobPrinter;
+import org.globsframework.core.metamodel.GlobModel;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.KeyField;
+import org.globsframework.core.metamodel.annotations.Target;
+import org.globsframework.core.metamodel.fields.GlobArrayField;
+import org.globsframework.core.metamodel.fields.GlobField;
+import org.globsframework.core.metamodel.fields.IntegerField;
+import org.globsframework.core.metamodel.fields.StringField;
+import org.globsframework.core.metamodel.impl.DefaultGlobModel;
+import org.globsframework.core.model.*;
+import org.globsframework.core.model.delta.DefaultChangeSet;
+import org.globsframework.core.model.delta.MutableChangeSet;
+import org.globsframework.core.model.format.GlobPrinter;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package org.globsframework.json.annottations;
 
+import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.json.JsonDateTimeFormatType;
-import org.globsframework.metamodel.GlobType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

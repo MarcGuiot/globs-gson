@@ -1,16 +1,15 @@
 package org.globsframework.json;
 
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.*;
+import org.globsframework.core.metamodel.fields.DateTimeField;
+import org.globsframework.core.metamodel.fields.GlobField;
+import org.globsframework.core.metamodel.fields.IntegerField;
+import org.globsframework.core.metamodel.fields.StringField;
+import org.globsframework.core.model.Glob;
 import org.globsframework.json.annottations.AllAnnotations;
 import org.globsframework.json.annottations.JsonDateTimeFormatAnnotation;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.metamodel.annotations.*;
-import org.globsframework.metamodel.fields.DateTimeField;
-import org.globsframework.metamodel.fields.GlobField;
-import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.model.Glob;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -143,9 +142,9 @@ public class GSonUtilsTest {
         }
         {
             final Glob decode = GSonUtils.decode("""
-                {
-                   "longId": 12345.67890123
-                }""", BigInt.TYPE);
+                    {
+                       "longId": 12345.67890123
+                    }""", BigInt.TYPE);
             Assert.assertEquals("12345.67890123", decode.get(BigInt.longId));
         }
     }

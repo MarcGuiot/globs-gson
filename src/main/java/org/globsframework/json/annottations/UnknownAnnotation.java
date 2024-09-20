@@ -1,9 +1,9 @@
 package org.globsframework.json.annottations;
 
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.annotations.KeyField;
-import org.globsframework.metamodel.fields.StringField;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.KeyField;
+import org.globsframework.core.metamodel.fields.StringField;
 
 public class UnknownAnnotation {
     public static GlobType TYPE;

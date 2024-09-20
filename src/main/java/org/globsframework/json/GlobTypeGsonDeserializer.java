@@ -1,11 +1,11 @@
 package org.globsframework.json;
 
 import com.google.gson.*;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeBuilder;
-import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
-import org.globsframework.metamodel.GlobTypeResolver;
-import org.globsframework.model.Glob;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeBuilder;
+import org.globsframework.core.metamodel.GlobTypeResolver;
+import org.globsframework.core.metamodel.impl.DefaultGlobTypeBuilder;
+import org.globsframework.core.model.Glob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,8 @@ class GlobTypeGsonDeserializer {
         if (json == null || json instanceof JsonNull) {
             return null;
         }
-        Runnable clean = () -> {};
+        Runnable clean = () -> {
+        };
         try {
             JsonObject jsonObject = (JsonObject) json;
             JsonElement typeElement = jsonObject.get(GlobsGson.TYPE_NAME);

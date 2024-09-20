@@ -3,11 +3,11 @@ package org.globsframework.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import junit.framework.Assert;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.annotations.KeyField;
-import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.model.KeyBuilder;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.KeyField;
+import org.globsframework.core.metamodel.fields.StringField;
+import org.globsframework.core.model.KeyBuilder;
 import org.junit.Test;
 
 public class UnknownAnnotationTest {
@@ -36,7 +36,7 @@ public class UnknownAnnotationTest {
                         if (name.equals(TypeToTest.TYPE.getName())) {
                             return TypeToTest.TYPE;
                         }
-                        if (name.equals(Ann1.TYPE.getName())){
+                        if (name.equals(Ann1.TYPE.getName())) {
                             return Ann1.TYPE;
                         }
                         return null;

@@ -1,7 +1,7 @@
 package org.globsframework.json.helper;
 
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeBuilderFactory;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeBuilderFactory;
 import org.junit.Assert;
 import org.junit.Test;
 

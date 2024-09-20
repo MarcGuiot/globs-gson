@@ -1,22 +1,18 @@
 package org.globsframework.json;
 
 import com.google.gson.Gson;
+import org.globsframework.core.metamodel.GlobModel;
+import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.*;
+import org.globsframework.core.metamodel.fields.*;
+import org.globsframework.core.metamodel.impl.DefaultGlobModel;
+import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.MutableGlob;
 import org.globsframework.json.annottations.IsJsonContentType;
-import org.globsframework.metamodel.GlobModel;
-import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.metamodel.annotations.*;
-import org.globsframework.metamodel.fields.*;
-import org.globsframework.metamodel.impl.DefaultGlobModel;
-import org.globsframework.model.Glob;
-import org.globsframework.model.MutableGlob;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.globsframework.json.GlobsGsonAdapterTest.assertEquivalent;
 
 public class GlobWithGlobFieldAndUnion {
@@ -187,7 +183,7 @@ public class GlobWithGlobFieldAndUnion {
     }
 
     @Test
-    public void readNewFormat(){
+    public void readNewFormat() {
         Gson gson = init();
         String newFormat =
                 "{\n" +
