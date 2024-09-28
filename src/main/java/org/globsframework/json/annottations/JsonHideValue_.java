@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @java.lang.annotation.Target({ElementType.FIELD})
-public @interface IsJsonContentAnnotation {
+public @interface JsonHideValue_ {
 
-    GlobType TYPE = IsJsonContentType.TYPE;
+    GlobType TYPE = JsonHideValue.TYPE;
 }

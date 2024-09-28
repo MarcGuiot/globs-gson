@@ -9,9 +9,9 @@ import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.model.FieldSetter;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.MutableGlob;
-import org.globsframework.json.annottations.IsJsonContentType;
-import org.globsframework.json.annottations.JsonAsObjectType;
-import org.globsframework.json.annottations.JsonValueAsFieldType;
+import org.globsframework.json.annottations.IsJsonContent;
+import org.globsframework.json.annottations.JsonAsObject;
+import org.globsframework.json.annottations.JsonValueAsField;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -61,7 +61,7 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
     }
 
     public void visitString(StringField field, FieldSetter mutableGlob, JsonReader jsonReader) throws Exception {
-        if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
+        if (field.hasAnnotation(IsJsonContent.UNIQUE_KEY)) {
             JsonElement parse = JsonParser.parseReader(jsonReader);
             if (parse.isJsonArray()) {
                 mutableGlob.set(field, GlobGSonDeserializer.GSON.toJson(parse.getAsJsonArray()));
@@ -94,7 +94,7 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
             if (values.length == count) {
                 values = Arrays.copyOf(values, values.length * 2);
             }
-            if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
+            if (field.hasAnnotation(IsJsonContent.UNIQUE_KEY)) {
                 JsonElement parse = JsonParser.parseReader(jsonReader);
                 if (parse.isJsonArray()) {
                     values[count++] = GlobGSonDeserializer.GSON.toJson(parse.getAsJsonArray());
@@ -209,11 +209,11 @@ public class ReadJsonWithReaderFieldVisitor implements FieldVisitorWithTwoContex
     public void visitGlobArray(GlobArrayField field, FieldSetter mutableGlob, JsonReader jsonReader) throws Exception {
         GlobType targetType = field.getTargetType();
         List<Glob> objs = new ArrayList<>();
-        if (field.hasAnnotation(JsonAsObjectType.UNIQUE_KEY)) {
-            Field fieldValueToUseAsName = targetType.findFieldWithAnnotation(JsonValueAsFieldType.UNIQUE_KEY);
+        if (field.hasAnnotation(JsonAsObject.UNIQUE_KEY)) {
+            Field fieldValueToUseAsName = targetType.findFieldWithAnnotation(JsonValueAsField.UNIQUE_KEY);
             if (fieldValueToUseAsName == null) {
-                throw new RuntimeException("A field with " + JsonValueAsFieldType.TYPE.getName() + " annotation is expected after " +
-                        JsonAsObjectType.TYPE.getName());
+                throw new RuntimeException("A field with " + JsonValueAsField.TYPE.getName() + " annotation is expected after " +
+                        JsonAsObject.TYPE.getName());
             }
             StringField typedFieldToUseAsName = fieldValueToUseAsName.asStringField();
             jsonReader.beginObject();

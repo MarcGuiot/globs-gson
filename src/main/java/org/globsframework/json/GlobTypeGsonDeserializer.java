@@ -46,7 +46,8 @@ class GlobTypeGsonDeserializer {
                 throw new RuntimeException("Missing " + GlobsGson.TYPE_NAME + " missing on " + jsonObject);
             }
             String name = typeElement.getAsString();
-            GlobTypeBuilder globTypeBuilder = DefaultGlobTypeBuilder.init(name);
+            List<Glob> globAnnotations = readAnnotations(jsonObject);
+            GlobTypeBuilder globTypeBuilder = DefaultGlobTypeBuilder.init(name, globAnnotations);
             GlobType globType = globTypeBuilder.unCompleteType();
             types.put(name, globType);
             clean = () -> types.remove(name);
@@ -63,10 +64,6 @@ class GlobTypeGsonDeserializer {
                         }
                     }
                 }
-            }
-            List<Glob> globAnnotations = readAnnotations(jsonObject);
-            for (Glob globAnnotation : globAnnotations) {
-                globTypeBuilder.addAnnotation(globAnnotation);
             }
             return globTypeBuilder.get();
         } catch (JsonParseException e) {

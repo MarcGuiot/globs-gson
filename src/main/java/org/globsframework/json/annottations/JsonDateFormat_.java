@@ -8,7 +8,9 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @java.lang.annotation.Target({ElementType.FIELD})
-public @interface JsonHidValue_ {
+public @interface JsonDateFormat_ {
 
-    GlobType TYPE = JsonHidValue.TYPE;
+    String value();
+
+    public GlobType TYPE = JsonDateFormat.TYPE;
 }

@@ -1,14 +1,25 @@
 package org.globsframework.json.annottations;
 
 import org.globsframework.core.metamodel.GlobType;
+import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.annotations.GlobCreateFromAnnotation;
+import org.globsframework.core.metamodel.annotations.InitUniqueGlob;
+import org.globsframework.core.metamodel.annotations.InitUniqueKey;
+import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.Key;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+public class JsonValueAsField {
+    public static GlobType TYPE;
 
-@Retention(RetentionPolicy.RUNTIME)
-@java.lang.annotation.Target({ElementType.FIELD})
-public @interface JsonValueAsField {
+    @InitUniqueKey
+    public static Key UNIQUE_KEY;
 
-    GlobType TYPE = JsonValueAsFieldType.TYPE;
+    @InitUniqueGlob
+    public static Glob UNIQUE_GLOB;
+
+    static {
+        GlobTypeLoaderFactory.create(JsonValueAsField.class, "JsonValueAsField")
+                .register(GlobCreateFromAnnotation.class, annotation -> UNIQUE_GLOB)
+                .load();
+    }
 }

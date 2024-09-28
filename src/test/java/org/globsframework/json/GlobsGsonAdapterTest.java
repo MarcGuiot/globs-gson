@@ -8,17 +8,17 @@ import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.GlobTypeBuilder;
 import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.core.metamodel.annotations.AllAnnotations;
-import org.globsframework.core.metamodel.annotations.FieldNameAnnotation;
-import org.globsframework.core.metamodel.annotations.KeyField;
-import org.globsframework.core.metamodel.annotations.Required;
+import org.globsframework.core.metamodel.annotations.FieldName_;
+import org.globsframework.core.metamodel.annotations.KeyField_;
+import org.globsframework.core.metamodel.annotations.Required_;
 import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.metamodel.impl.DefaultGlobModel;
 import org.globsframework.core.metamodel.impl.DefaultGlobTypeBuilder;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.Key;
 import org.globsframework.core.model.MutableGlob;
-import org.globsframework.json.annottations.IsJsonContentAnnotation;
-import org.globsframework.json.annottations.IsJsonContentType;
+import org.globsframework.json.annottations.IsJsonContent_;
+import org.globsframework.json.annottations.IsJsonContent;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -43,17 +43,17 @@ public class GlobsGsonAdapterTest {
     public static final String A_GLOB = "{\"_kind\":\"test local type\",\"id\":1,\"a different name\":\"name 1\",\"data\":{\"sub\":\"aaa\"},\"value\":3.14159}";
 
     public static class LocalType {
-        @Required
+        @Required_
         public static GlobType TYPE;
 
-        @KeyField
+        @KeyField_
         public static IntegerField ID;
 
-        @KeyField
-        @FieldNameAnnotation("a different name")
+        @KeyField_
+        @FieldName_("a different name")
         public static StringField NAME;
 
-        @IsJsonContentAnnotation()
+        @IsJsonContent_()
         public static StringField DATA;
 
         public static DoubleField VALUE;
@@ -78,7 +78,7 @@ public class GlobsGsonAdapterTest {
                       "type": "int",
                       "annotations": [
                         {
-                          "_kind": "KeyAnnotation",
+                          "_kind": "KeyField",
                           "index": 0
                         }
                       ]
@@ -88,7 +88,7 @@ public class GlobsGsonAdapterTest {
                       "type": "string",
                       "annotations": [
                         {
-                          "_kind": "KeyAnnotation",
+                          "_kind": "KeyField",
                           "index": 1
                         }
                       ]
@@ -98,7 +98,7 @@ public class GlobsGsonAdapterTest {
                       "type": "string",
                       "annotations": [
                         {
-                          "_kind": "isJsonContent"
+                          "_kind": "IsJsonContent"
                         }
                       ]
                     },
@@ -109,7 +109,7 @@ public class GlobsGsonAdapterTest {
                   ],
                   "annotations": [
                     {
-                      "_kind": "requiredAnnotationType"
+                      "_kind": "Required"
                     }
                   ]
                 }
@@ -117,7 +117,7 @@ public class GlobsGsonAdapterTest {
     }
 
     private Gson init(GlobType... types) {
-        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllAnnotations.MODEL, types), LocalType.TYPE, IsJsonContentType.TYPE);
+        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllAnnotations.MODEL, types), LocalType.TYPE, IsJsonContent.TYPE);
         return GlobsGson.create(globTypes::getType);
     }
 
@@ -421,10 +421,10 @@ public class GlobsGsonAdapterTest {
         BooleanArrayField booleanArray = globTypeBuilder.declareBooleanArrayField("booleanArray");
         StringField string = globTypeBuilder.declareStringField("String");
         StringArrayField stringArray = globTypeBuilder.declareStringArrayField("StringArray");
-        StringField jsonObjectString = globTypeBuilder.declareStringField("JsonObjectString", IsJsonContentType.UNIQUE_GLOB);
-        StringArrayField jsonObjectStringArray = globTypeBuilder.declareStringArrayField("JsonObjectStringArray", IsJsonContentType.UNIQUE_GLOB);
-        StringField jsonArrayString = globTypeBuilder.declareStringField("JsonArrayString", IsJsonContentType.UNIQUE_GLOB);
-        StringArrayField jsonArrayStringArray = globTypeBuilder.declareStringArrayField("JsonArrayStringArray", IsJsonContentType.UNIQUE_GLOB);
+        StringField jsonObjectString = globTypeBuilder.declareStringField("JsonObjectString", IsJsonContent.UNIQUE_GLOB);
+        StringArrayField jsonObjectStringArray = globTypeBuilder.declareStringArrayField("JsonObjectStringArray", IsJsonContent.UNIQUE_GLOB);
+        StringField jsonArrayString = globTypeBuilder.declareStringField("JsonArrayString", IsJsonContent.UNIQUE_GLOB);
+        StringArrayField jsonArrayStringArray = globTypeBuilder.declareStringArrayField("JsonArrayStringArray", IsJsonContent.UNIQUE_GLOB);
         LongField aLong = globTypeBuilder.declareLongField("long");
         LongArrayField longArray = globTypeBuilder.declareLongArrayField("longArray");
         BigDecimalField bigDecimal = globTypeBuilder.declareBigDecimalField("bigDecimal");

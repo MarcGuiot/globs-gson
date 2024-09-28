@@ -3,9 +3,9 @@ package org.globsframework.json;
 import com.google.gson.stream.JsonWriter;
 import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.model.Glob;
-import org.globsframework.json.annottations.IsJsonContentType;
-import org.globsframework.json.annottations.JsonAsObjectType;
-import org.globsframework.json.annottations.JsonValueAsFieldType;
+import org.globsframework.json.annottations.IsJsonContent;
+import org.globsframework.json.annottations.JsonAsObject;
+import org.globsframework.json.annottations.JsonValueAsField;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -77,7 +77,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
 
     public void visitString(StringField field, String value) throws Exception {
         jsonWriter.name(field.getName());
-        if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
+        if (field.hasAnnotation(IsJsonContent.UNIQUE_KEY)) {
             jsonWriter.jsonValue(value);
         } else {
             jsonWriter.value(value);
@@ -89,7 +89,7 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
         if (value != null) {
             jsonWriter.beginArray();
             for (String v : value) {
-                if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
+                if (field.hasAnnotation(IsJsonContent.UNIQUE_KEY)) {
                     jsonWriter.jsonValue(v);
                 } else {
                     jsonWriter.value(v);
@@ -178,13 +178,13 @@ public class JsonFieldValueVisitor implements FieldValueVisitor {
     }
 
     public void visitGlobArray(GlobArrayField field, Glob[] value) throws Exception {
-        if (field.hasAnnotation(JsonAsObjectType.UNIQUE_KEY)) {
+        if (field.hasAnnotation(JsonAsObject.UNIQUE_KEY)) {
             jsonWriter.name(field.getName());
             jsonWriter.beginObject();
-            Field fieldValueToUseAsName = field.getTargetType().findFieldWithAnnotation(JsonValueAsFieldType.UNIQUE_KEY);
+            Field fieldValueToUseAsName = field.getTargetType().findFieldWithAnnotation(JsonValueAsField.UNIQUE_KEY);
             if (fieldValueToUseAsName == null) {
-                throw new RuntimeException("A field with " + JsonValueAsFieldType.TYPE.getName() + " annotation is expected after " +
-                        JsonAsObjectType.TYPE.getName() + " for " + field.getFullName());
+                throw new RuntimeException("A field with " + JsonValueAsField.TYPE.getName() + " annotation is expected after " +
+                        JsonAsObject.TYPE.getName() + " for " + field.getFullName());
             }
             for (Glob glob : value) {
                 Object value1 = glob.getValue(fieldValueToUseAsName);

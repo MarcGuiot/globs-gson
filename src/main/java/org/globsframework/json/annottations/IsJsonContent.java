@@ -8,7 +8,7 @@ import org.globsframework.core.metamodel.annotations.InitUniqueKey;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.Key;
 
-public class IsJsonContentType {
+public class IsJsonContent {
     public static GlobType TYPE;
 
     @InitUniqueKey
@@ -18,7 +18,7 @@ public class IsJsonContentType {
     public static Glob UNIQUE_GLOB;
 
     static {
-        GlobTypeLoaderFactory.create(IsJsonContentType.class, "isJsonContent")
+        GlobTypeLoaderFactory.create(IsJsonContent.class, "IsJsonContent")
                 .register(GlobCreateFromAnnotation.class, annotation -> UNIQUE_GLOB)
                 .load();
     }

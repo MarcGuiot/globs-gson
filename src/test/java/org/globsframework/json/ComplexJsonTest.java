@@ -8,8 +8,8 @@ import org.globsframework.core.metamodel.fields.GlobArrayField;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.MutableGlob;
-import org.globsframework.json.annottations.JsonAsObject;
-import org.globsframework.json.annottations.JsonValueAsField;
+import org.globsframework.json.annottations.JsonAsObject_;
+import org.globsframework.json.annottations.JsonValueAsField_;
 import org.junit.Test;
 
 public class ComplexJsonTest {
@@ -45,7 +45,7 @@ public class ComplexJsonTest {
         public static StringField a;
 
         @Target(B.class)
-        @JsonAsObject
+        @JsonAsObject_
         public static GlobArrayField b;
 
         static {
@@ -56,7 +56,7 @@ public class ComplexJsonTest {
     public static class B {
         public static GlobType TYPE;
 
-        @JsonValueAsField
+        @JsonValueAsField_
         public static StringField name;
 
         public static StringField otherField;

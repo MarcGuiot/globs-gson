@@ -5,7 +5,7 @@ import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.MutableGlob;
-import org.globsframework.json.annottations.IsJsonContentAnnotation;
+import org.globsframework.json.annottations.IsJsonContent_;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public class TestWithIsJsonContent {
 
     public static class TypeWithJsonAttr {
         public static GlobType TYPE;
-        @IsJsonContentAnnotation
+        @IsJsonContent_
         public static StringField value;
 
         static {

@@ -7,9 +7,9 @@ import org.globsframework.core.metamodel.annotations.InitUniqueKey;
 import org.globsframework.core.metamodel.fields.BooleanField;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.Key;
-import org.globsframework.json.annottations.JsonDateTimeFormatAnnotation;
+import org.globsframework.json.annottations.JsonDateTimeFormat_;
 
-public class JsonDateTimeFormatType {
+public class JsonDateTimeFormat {
     public static GlobType TYPE;
 
     public static StringField format;
@@ -26,12 +26,12 @@ public class JsonDateTimeFormatType {
     public static Key UNIQUE_KEY;
 
     static {
-        GlobTypeLoaderFactory.create(JsonDateTimeFormatType.class, "jsonDateTimeFormat")
+        GlobTypeLoaderFactory.create(JsonDateTimeFormat.class, "JsonDateTimeFormat")
                 .register(GlobCreateFromAnnotation.class, annotation -> TYPE.instantiate()
-                        .set(format, ((JsonDateTimeFormatAnnotation) annotation).pattern())
-                        .set(useLocalZone, ((JsonDateTimeFormatAnnotation) annotation).asLocal())
-                        .set(nullValue, ((JsonDateTimeFormatAnnotation) annotation).nullValue())
-                        .set(strictIso8601, ((JsonDateTimeFormatAnnotation) annotation).strictIso8601())
+                        .set(format, ((JsonDateTimeFormat_) annotation).pattern())
+                        .set(useLocalZone, ((JsonDateTimeFormat_) annotation).asLocal())
+                        .set(nullValue, ((JsonDateTimeFormat_) annotation).nullValue())
+                        .set(strictIso8601, ((JsonDateTimeFormat_) annotation).strictIso8601())
                 )
                 .load();
     }

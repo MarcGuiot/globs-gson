@@ -9,7 +9,7 @@ import org.globsframework.core.metamodel.fields.IntegerField;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.Glob;
 import org.globsframework.json.annottations.AllAnnotations;
-import org.globsframework.json.annottations.JsonDateTimeFormatAnnotation;
+import org.globsframework.json.annottations.JsonDateTimeFormat_;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -59,24 +59,24 @@ public class GSonUtilsTest {
         System.out.println(s);
         GlobType type = GSonUtils.decodeGlobType(s, AllAnnotations.RESOLVER, false);
         Assert.assertTrue(type.getField("id").isKeyField());
-        Assert.assertTrue(type.getField("id").hasAnnotation(KeyAnnotationType.UNIQUE_KEY));
-        Assert.assertTrue(type.getField("arrival").hasAnnotation(JsonDateTimeFormatType.UNIQUE_KEY));
+        Assert.assertTrue(type.getField("id").hasAnnotation(KeyField.UNIQUE_KEY));
+        Assert.assertTrue(type.getField("arrival").hasAnnotation(JsonDateTimeFormat.UNIQUE_KEY));
         Assert.assertEquals(LocalType.TYPE.getName(), type.getName());
         String s2 = GSonUtils.encodeGlobType(type);
     }
 
 
     public static class LocalType {
-        @Required
+        @Required_
         public static GlobType TYPE;
 
-        @KeyField
+        @KeyField_
         public static IntegerField id;
 
         @AnnotationLevel_1
         public static StringField name;
 
-        @JsonDateTimeFormatAnnotation(pattern = "yyyy-MM-dd HH:mm:ss", asLocal = true, nullValue = "0000")
+        @JsonDateTimeFormat_(pattern = "yyyy-MM-dd HH:mm:ss", asLocal = true, nullValue = "0000")
         public static DateTimeField arrival;
 
 

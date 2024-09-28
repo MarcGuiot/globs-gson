@@ -9,7 +9,7 @@ import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.metamodel.impl.DefaultGlobModel;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.MutableGlob;
-import org.globsframework.json.annottations.IsJsonContentType;
+import org.globsframework.json.annottations.IsJsonContent;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -57,10 +57,10 @@ public class GlobWithGlobFieldAndUnion {
             "}";
 
     public static class LocalType {
-        @Required
+        @Required_
         public static GlobType TYPE;
 
-        @KeyField
+        @KeyField_
         public static IntegerField ID;
 
         @Targets({SubSecondType.class, SubFirstType.class})
@@ -82,10 +82,10 @@ public class GlobWithGlobFieldAndUnion {
     }
 
     public static class SubFirstType {
-        @Required
+        @Required_
         public static GlobType TYPE;
 
-        @KeyField
+        @KeyField_
         public static StringField NAME;
 
         public static StringField DATA;
@@ -100,7 +100,7 @@ public class GlobWithGlobFieldAndUnion {
     }
 
     public static class SubSecondType {
-        @Required
+        @Required_
         public static GlobType TYPE;
 
         public static IntegerField ID;
@@ -168,7 +168,7 @@ public class GlobWithGlobFieldAndUnion {
     }
 
     private Gson init(GlobType... types) {
-        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllAnnotations.MODEL, types), LocalType.TYPE, SubFirstType.TYPE, SubSecondType.TYPE, IsJsonContentType.TYPE);
+        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllAnnotations.MODEL, types), LocalType.TYPE, SubFirstType.TYPE, SubSecondType.TYPE, IsJsonContent.TYPE);
         return GlobsGson.create(globTypes::getType);
     }
 

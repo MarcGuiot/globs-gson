@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import junit.framework.Assert;
 import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.core.metamodel.annotations.KeyField;
+import org.globsframework.core.metamodel.annotations.KeyField_;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.KeyBuilder;
 import org.junit.Test;
@@ -62,7 +62,7 @@ public class UnknownAnnotationTest {
     public static class Ann1 {
         public static GlobType TYPE;
 
-        @KeyField
+        @KeyField_
         public static StringField UUID;
 
         public static StringField SOME_DATA;

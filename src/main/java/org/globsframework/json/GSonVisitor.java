@@ -7,7 +7,7 @@ import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.model.FieldSetter;
 import org.globsframework.core.model.Glob;
-import org.globsframework.json.annottations.IsJsonContentType;
+import org.globsframework.json.annottations.IsJsonContent;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -47,7 +47,7 @@ public abstract class GSonVisitor implements FieldVisitorWithTwoContext<JsonElem
     }
 
     public void visitString(StringField stringField, JsonElement element, FieldSetter fieldSetter) {
-        if (stringField.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
+        if (stringField.hasAnnotation(IsJsonContent.UNIQUE_KEY)) {
             if (element.isJsonObject()) {
                 JsonObject jsonObject = element.getAsJsonObject();
                 fieldSetter.set(stringField, GlobGSonDeserializer.GSON.toJson(jsonObject));
@@ -67,7 +67,7 @@ public abstract class GSonVisitor implements FieldVisitorWithTwoContext<JsonElem
         String value[] = new String[asJsonArray.size()];
         int i = 0;
         for (JsonElement element : asJsonArray) {
-            if (field.hasAnnotation(IsJsonContentType.UNIQUE_KEY)) {
+            if (field.hasAnnotation(IsJsonContent.UNIQUE_KEY)) {
                 if (element.isJsonObject()) {
                     JsonObject jsonObject = element.getAsJsonObject();
                     if (jsonObject != null) {

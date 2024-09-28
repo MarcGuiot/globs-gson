@@ -8,7 +8,7 @@ import org.globsframework.core.metamodel.annotations.InitUniqueKey;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.Key;
 
-public class JsonHidValue {
+public class JsonHideValue {
     public static GlobType TYPE;
 
     @InitUniqueKey
@@ -18,7 +18,7 @@ public class JsonHidValue {
     public static Glob UNIQUE_GLOB;
 
     static {
-        GlobTypeLoaderFactory.create(JsonHidValue.class, "jsonHidValue")
+        GlobTypeLoaderFactory.create(JsonHideValue.class, "JsonHideValue")
                 .register(GlobCreateFromAnnotation.class, annotation -> UNIQUE_GLOB)
                 .load();
     }

@@ -6,7 +6,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.GlobTypeResolver;
-import org.globsframework.core.metamodel.annotations.FieldNameAnnotationType;
+import org.globsframework.core.metamodel.annotations.FieldName;
 import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.model.Glob;
 import org.globsframework.json.annottations.UnknownAnnotation;
@@ -157,8 +157,8 @@ class GlobTypeArrayGsonAdapter extends TypeAdapter<GlobType> {
 
         writeAnnotations(out,
                 field.streamAnnotations()
-                        .filter(glob -> glob.getType() != FieldNameAnnotationType.TYPE ||
-                                !glob.get(FieldNameAnnotationType.NAME).equals(field.getName())));
+                        .filter(glob -> glob.getType() != FieldName.TYPE ||
+                                !glob.get(FieldName.NAME).equals(field.getName())));
         out.endObject();
         return out;
     }

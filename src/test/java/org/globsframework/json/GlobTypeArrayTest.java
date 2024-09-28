@@ -3,7 +3,7 @@ package org.globsframework.json;
 import com.google.gson.Gson;
 import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.GlobTypeResolver;
-import org.globsframework.core.metamodel.annotations.FieldNameAnnotationType;
+import org.globsframework.core.metamodel.annotations.FieldName;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class GlobTypeArrayTest {
                 "{\"kind\":\"fieldNameAnnotation\",\"fields\":[{\"name\":\"name\",\"type\":\"string\"}]}," +
                 "{\"kind\":\"Csv\",\"fields\":[{\"name\":\"Csv:EAN\",\"type\":\"string\",\"annotations\":[{\"_kind\":\"fieldNameAnnotation\",\"name\":\"EAN\"}]}]}]\n";
 
-        Gson gson = GlobsGson.create(GlobTypeResolver.from(FieldNameAnnotationType.TYPE));
+        Gson gson = GlobsGson.create(GlobTypeResolver.from(FieldName.TYPE));
         GlobType[] globTypes = gson.fromJson(name, GlobTypeSet.class).globType;
         Assert.assertEquals(3, globTypes.length);
         GlobTypeSet export = GlobTypeSet.export(globTypes[0]);
@@ -71,7 +71,7 @@ public class GlobTypeArrayTest {
                 ]
                 """;
 
-        Gson gson = GlobsGson.create(GlobTypeResolver.from(FieldNameAnnotationType.TYPE));
+        Gson gson = GlobsGson.create(GlobTypeResolver.from(FieldName.TYPE));
         GlobType[] globTypes = gson.fromJson(name, GlobTypeSet.class).globType;
         Assert.assertEquals(3, globTypes.length);
         GlobTypeSet export = GlobTypeSet.export(globTypes[0]);

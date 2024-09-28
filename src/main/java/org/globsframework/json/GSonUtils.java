@@ -16,7 +16,7 @@ import org.globsframework.core.model.FieldValues;
 import org.globsframework.core.model.Glob;
 import org.globsframework.core.model.Key;
 import org.globsframework.core.utils.Strings;
-import org.globsframework.json.annottations.JsonDateFormatType;
+import org.globsframework.json.annottations.JsonDateFormat;
 import org.globsframework.json.helper.ISO8601Utils;
 
 import java.io.IOException;
@@ -271,9 +271,9 @@ public class GSonUtils {
 
     public static DateTimeFormatter getCachedDateFormatter(DateField field) {
         DateTimeFormatter dateConverter;
-        if (field.hasAnnotation(JsonDateFormatType.UNIQUE_KEY)) {
-            Glob annotation = field.getAnnotation(JsonDateFormatType.UNIQUE_KEY);
-            String pattern = annotation.get(JsonDateFormatType.FORMAT);
+        if (field.hasAnnotation(JsonDateFormat.UNIQUE_KEY)) {
+            Glob annotation = field.getAnnotation(JsonDateFormat.UNIQUE_KEY);
+            String pattern = annotation.get(JsonDateFormat.FORMAT);
             DateTimeFormatter dateTimeFormatter = CACHE_DATE.get(pattern);
             if (dateTimeFormatter == null) {
                 dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
@@ -372,16 +372,16 @@ public class GSonUtils {
             return formaterForDateTime;
         }
         FormaterForDateTime dateConverter;
-        Glob annotation = field.findAnnotation(JsonDateTimeFormatType.UNIQUE_KEY);
+        Glob annotation = field.findAnnotation(JsonDateTimeFormat.UNIQUE_KEY);
         if (annotation != null) {
-            if (annotation.isTrue(JsonDateTimeFormatType.useFastIso8601)) {
+            if (annotation.isTrue(JsonDateTimeFormat.useFastIso8601)) {
                 dateConverter = IsoFastOffsetFormater.formater;
-            } else if (annotation.isTrue(JsonDateTimeFormatType.strictIso8601)) {
+            } else if (annotation.isTrue(JsonDateTimeFormat.strictIso8601)) {
                 dateConverter = IsoFastStrictOffsetFormater.formater;
             } else {
-                String pattern = annotation.get(JsonDateTimeFormatType.format);
+                String pattern = annotation.get(JsonDateTimeFormat.format);
                 if (Strings.isNotEmpty(pattern)) {
-                    final boolean forceLocal = annotation.isTrue(JsonDateTimeFormatType.useLocalZone);
+                    final boolean forceLocal = annotation.isTrue(JsonDateTimeFormat.useLocalZone);
                     if (forceLocal) {
                         dateConverter = new DefaultLocalFormater(DateTimeFormatter.ofPattern(pattern), ZoneId.systemDefault());
                     } else {
@@ -391,7 +391,7 @@ public class GSonUtils {
                     dateConverter = IsoWithZoneFormater.formaterForDateTime;
                 }
             }
-            final String s = annotation.get(JsonDateTimeFormatType.nullValue);
+            final String s = annotation.get(JsonDateTimeFormat.nullValue);
             if (Strings.isNotEmpty(s)) {
                 dateConverter = new FilterNullFormater(s, dateConverter);
             }
