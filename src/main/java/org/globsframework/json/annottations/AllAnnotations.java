@@ -3,7 +3,6 @@ package org.globsframework.json.annottations;
 import org.globsframework.core.metamodel.GlobModel;
 import org.globsframework.core.metamodel.GlobTypeResolver;
 import org.globsframework.core.metamodel.impl.DefaultGlobModel;
-import org.globsframework.json.JsonDateTimeFormat;
 
 public class AllAnnotations {
     public final static GlobModel MODEL =

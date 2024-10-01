@@ -9,6 +9,7 @@ import org.globsframework.core.metamodel.fields.IntegerField;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.Glob;
 import org.globsframework.json.annottations.AllAnnotations;
+import org.globsframework.json.annottations.JsonDateTimeFormat;
 import org.globsframework.json.annottations.JsonDateTimeFormat_;
 import org.junit.Assert;
 import org.junit.Test;

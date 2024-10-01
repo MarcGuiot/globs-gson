@@ -1,4 +1,4 @@
-package org.globsframework.json;
+package org.globsframework.json.annottations;
 
 import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
@@ -7,7 +7,6 @@ import org.globsframework.core.metamodel.annotations.InitUniqueKey;
 import org.globsframework.core.metamodel.fields.BooleanField;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.Key;
-import org.globsframework.json.annottations.JsonDateTimeFormat_;
 
 public class JsonDateTimeFormat {
     public static GlobType TYPE;
