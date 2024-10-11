@@ -19,7 +19,7 @@ public class GlobWithGlobFieldAndUnion {
 
 
     static {
-        System.setProperty("org.globsframework.builder", "org.globsframework.model.generator.GeneratorGlobFactoryService");
+        System.setProperty("org.globsframework.builder", "org.globsframework.model.generator.object.GeneratorGlobFactoryService");
     }
 
     public static final String A_GLOB = "{\n" +
@@ -127,7 +127,7 @@ public class GlobWithGlobFieldAndUnion {
                 "      \"type\": \"int\",\n" +
                 "      \"annotations\": [\n" +
                 "        {\n" +
-                "          \"_kind\": \"KeyAnnotation\",\n" +
+                "          \"_kind\": \"KeyField\",\n" +
                 "          \"index\": 0\n" +
                 "        }\n" +
                 "      ]\n" +
@@ -161,7 +161,7 @@ public class GlobWithGlobFieldAndUnion {
                 "  ],\n" +
                 "  \"annotations\": [\n" +
                 "    {\n" +
-                "      \"_kind\": \"requiredAnnotationType\"\n" +
+                "      \"_kind\": \"Required\"\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}", json);
@@ -194,7 +194,7 @@ public class GlobWithGlobFieldAndUnion {
                         "      \"type\": \"int\",\n" +
                         "      \"annotations\": [\n" +
                         "        {\n" +
-                        "          \"_kind\": \"KeyAnnotation\",\n" +
+                        "          \"_kind\": \"KeyField\",\n" +
                         "          \"index\": 0\n" +
                         "        }\n" +
                         "      ]\n" +
@@ -228,7 +228,7 @@ public class GlobWithGlobFieldAndUnion {
                         "  ],\n" +
                         "  \"annotations\": [\n" +
                         "    {\n" +
-                        "      \"_kind\": \"requiredAnnotationType\"\n" +
+                        "      \"_kind\": \"Required\"\n" +
                         "    }\n" +
                         "  ]\n" +
                         "}";
