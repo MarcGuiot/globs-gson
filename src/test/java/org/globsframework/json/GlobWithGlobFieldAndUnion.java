@@ -17,10 +17,10 @@ import static org.globsframework.json.GlobsGsonAdapterTest.assertEquivalent;
 
 public class GlobWithGlobFieldAndUnion {
 
-
-    static {
-        System.setProperty("org.globsframework.builder", "org.globsframework.model.generator.object.GeneratorGlobFactoryService");
-    }
+//    static {
+//        System.setProperty("org.globsframework.builder", "org.globsframework.model.generator.object.GeneratorGlobFactoryService");
+//        GlobFactoryService.Builder.reset();
+//    }
 
     public static final String A_GLOB = "{\n" +
             "  \"_kind\": \"test local type\",\n" +

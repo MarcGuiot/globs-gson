@@ -15,6 +15,7 @@ import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.metamodel.impl.DefaultGlobModel;
 import org.globsframework.core.metamodel.impl.DefaultGlobTypeBuilder;
 import org.globsframework.core.model.Glob;
+import org.globsframework.core.model.GlobFactoryService;
 import org.globsframework.core.model.Key;
 import org.globsframework.core.model.MutableGlob;
 import org.globsframework.json.annottations.IsJsonContent_;
@@ -36,9 +37,11 @@ import java.util.stream.LongStream;
 
 public class GlobsGsonAdapterTest {
 
-    static {
-        System.setProperty("org.globsframework.builder", "org.globsframework.model.generator.GeneratorGlobFactoryService");
-    }
+//    static {
+//        System.setProperty("org.globsframework.builder", "org.globsframework.model.generator.primitive.GeneratorGlobFactoryService");
+//        GlobFactoryService.Builder.reset();
+//
+//    }
 
     public static final String A_GLOB = "{\"_kind\":\"test local type\",\"id\":1,\"a different name\":\"name 1\",\"data\":{\"sub\":\"aaa\"},\"value\":3.14159}";
 

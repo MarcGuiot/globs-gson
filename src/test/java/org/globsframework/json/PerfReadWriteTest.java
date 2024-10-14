@@ -24,6 +24,7 @@ public class PerfReadWriteTest {
 //    static {
 //        System.setProperty("org.globsframework.builder", "org.globsframework.model.generator.object.GeneratorGlobFactoryService");
 //        System.setProperty("globsframework.field.no.check", "true");
+//        GlobFactoryService.Builder.reset();
 //    }
 
     public static class PlainJavaObject {
