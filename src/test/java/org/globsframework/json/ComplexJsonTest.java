@@ -27,7 +27,7 @@ public class ComplexJsonTest {
                                 .set(B.otherField, "o2")
                 });
         String encode = GSonUtils.encode(a, true);
-        Assert.assertEquals("{\"_kind\":\"a\",\"a\":\"a\",\"b\":{\"b1\":{\"otherField\":\"o1\"},\"b2\":{\"otherField\":\"o2\"}}}", encode);
+        Assert.assertEquals("{\"_kind\":\"A\",\"a\":\"a\",\"b\":{\"b1\":{\"otherField\":\"o1\"},\"b2\":{\"otherField\":\"o2\"}}}", encode);
 
 
         Glob newA = GSonUtils.decode(encode, A.TYPE);

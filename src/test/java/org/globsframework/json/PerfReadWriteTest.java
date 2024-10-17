@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.GlobTypeBuilder;
-import org.globsframework.core.metamodel.annotations.AllAnnotations;
+import org.globsframework.core.metamodel.annotations.AllCoreAnnotations;
 import org.globsframework.core.metamodel.fields.DoubleField;
 import org.globsframework.core.metamodel.fields.IntegerField;
 import org.globsframework.core.metamodel.fields.StringField;
@@ -89,7 +89,7 @@ public class PerfReadWriteTest {
 //                                .set(aDate, ZonedDateTime.now(Clock.systemUTC()).plusHours((long) (Math.random() * 10)))
                                 .set(aDouble, i))
                 .collect(Collectors.toList());
-        DefaultGlobModel globTypes = new DefaultGlobModel(AllAnnotations.MODEL, globType);
+        DefaultGlobModel globTypes = new DefaultGlobModel(AllCoreAnnotations.MODEL, globType);
         Gson gson = GlobsGson.create(globTypes::getType);
         String s = "";
         final Glob[] array = collect.toArray(Glob[]::new);

@@ -168,7 +168,7 @@ public class GlobWithGlobFieldAndUnion {
     }
 
     private Gson init(GlobType... types) {
-        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllAnnotations.MODEL, types), LocalType.TYPE, SubFirstType.TYPE, SubSecondType.TYPE, IsJsonContent.TYPE);
+        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllCoreAnnotations.MODEL, types), LocalType.TYPE, SubFirstType.TYPE, SubSecondType.TYPE, IsJsonContent.TYPE);
         return GlobsGson.create(globTypes::getType);
     }
 

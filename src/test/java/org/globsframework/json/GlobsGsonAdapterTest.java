@@ -7,7 +7,7 @@ import org.globsframework.core.metamodel.GlobModel;
 import org.globsframework.core.metamodel.GlobType;
 import org.globsframework.core.metamodel.GlobTypeBuilder;
 import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
-import org.globsframework.core.metamodel.annotations.AllAnnotations;
+import org.globsframework.core.metamodel.annotations.AllCoreAnnotations;
 import org.globsframework.core.metamodel.annotations.FieldName_;
 import org.globsframework.core.metamodel.annotations.KeyField_;
 import org.globsframework.core.metamodel.annotations.Required_;
@@ -15,7 +15,6 @@ import org.globsframework.core.metamodel.fields.*;
 import org.globsframework.core.metamodel.impl.DefaultGlobModel;
 import org.globsframework.core.metamodel.impl.DefaultGlobTypeBuilder;
 import org.globsframework.core.model.Glob;
-import org.globsframework.core.model.GlobFactoryService;
 import org.globsframework.core.model.Key;
 import org.globsframework.core.model.MutableGlob;
 import org.globsframework.json.annottations.IsJsonContent_;
@@ -120,7 +119,7 @@ public class GlobsGsonAdapterTest {
     }
 
     private Gson init(GlobType... types) {
-        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllAnnotations.MODEL, types), LocalType.TYPE, IsJsonContent.TYPE);
+        GlobModel globTypes = new DefaultGlobModel(new DefaultGlobModel(AllCoreAnnotations.MODEL, types), LocalType.TYPE, IsJsonContent.TYPE);
         return GlobsGson.create(globTypes::getType);
     }
 

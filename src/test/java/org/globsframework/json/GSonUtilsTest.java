@@ -8,7 +8,7 @@ import org.globsframework.core.metamodel.fields.GlobField;
 import org.globsframework.core.metamodel.fields.IntegerField;
 import org.globsframework.core.metamodel.fields.StringField;
 import org.globsframework.core.model.Glob;
-import org.globsframework.json.annottations.AllAnnotations;
+import org.globsframework.json.annottations.AllJsonAnnotations;
 import org.globsframework.json.annottations.JsonDateTimeFormat;
 import org.globsframework.json.annottations.JsonDateTimeFormat_;
 import org.junit.Assert;
@@ -58,7 +58,7 @@ public class GSonUtilsTest {
     public void encodeDecodeGlobType() {
         String s = GSonUtils.encodeGlobType(LocalType.TYPE);
         System.out.println(s);
-        GlobType type = GSonUtils.decodeGlobType(s, AllAnnotations.RESOLVER, false);
+        GlobType type = GSonUtils.decodeGlobType(s, AllJsonAnnotations.RESOLVER, false);
         Assert.assertTrue(type.getField("id").isKeyField());
         Assert.assertTrue(type.getField("id").hasAnnotation(KeyField.UNIQUE_KEY));
         Assert.assertTrue(type.getField("arrival").hasAnnotation(JsonDateTimeFormat.UNIQUE_KEY));
