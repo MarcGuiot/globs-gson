@@ -146,7 +146,7 @@ public class GSonUtils {
         return stringBuilder.toString();
     }
 
-    public static String encodeWihKind(Glob glob) {
+    public static String encodeWithKind(Glob glob) {
         return encode(glob, true);
     }
 
