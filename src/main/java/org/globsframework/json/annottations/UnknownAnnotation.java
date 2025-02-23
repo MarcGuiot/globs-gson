@@ -1,20 +1,27 @@
 package org.globsframework.json.annottations;
 
 import org.globsframework.core.metamodel.GlobType;
-import org.globsframework.core.metamodel.GlobTypeLoaderFactory;
+import org.globsframework.core.metamodel.GlobTypeBuilder;
+import org.globsframework.core.metamodel.GlobTypeBuilderFactory;
+import org.globsframework.core.metamodel.annotations.KeyField;
 import org.globsframework.core.metamodel.annotations.KeyField_;
 import org.globsframework.core.metamodel.fields.StringField;
 
 public class UnknownAnnotation {
-    public static GlobType TYPE;
+    public static final GlobType TYPE;
 
     @KeyField_
-    public static StringField uuid;
+    public static final StringField uuid;
 
     @IsJsonContent_
-    public static StringField CONTENT;
+    public static final StringField CONTENT;
 
     static {
-        GlobTypeLoaderFactory.create(UnknownAnnotation.class, "UnknownAnnotation").load();
+        GlobTypeBuilder typeBuilder = GlobTypeBuilderFactory.create("UnknownAnnotation");
+        TYPE = typeBuilder.unCompleteType();
+        uuid = typeBuilder.declareStringField("uuid", KeyField.ZERO);
+        CONTENT = typeBuilder.declareStringField("content", IsJsonContent.UNIQUE_GLOB);
+        typeBuilder.complete();
+//        GlobTypeLoaderFactory.create(UnknownAnnotation.class, "UnknownAnnotation").load();
     }
 }
